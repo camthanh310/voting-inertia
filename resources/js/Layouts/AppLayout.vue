@@ -48,27 +48,26 @@
 
                 <form action="#" class="space-y-4 px-4 py-6">
                     <div>
-                        <input type="text" class="w-full text-sm bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2" placeholder="Your Idea">
+                        <AppInput placeholder="Your Idea" />
                     </div>
                     <div>
-                        <select id="category-add" class="w-full bg-gray-100 text-sm rounded-xl border-none px-4 py-2">
-                            <option value="category 1">Category One</option>
-                            <option value="category 1">Category One</option>
-                            <option value="category 1">Category One</option>
-                            <option value="category 1">Category One</option>
-                        </select>
+                        <AppSelect id="category-add" :options="categories" class="bg-gray-100 text-sm" />
                     </div>
                     <div>
-                        <textarea id="idea" cols="30" rows="4" class="w-full bg-gray-100 border-none text-sm rounded-xl placeholder-gray-900 px-4 py-2" placeholder="Describe your idea"></textarea>
+                        <AppTextarea
+                            id="idea"
+                            placeholder="Describe your idea"
+                        />
                     </div>
                     <div class="flex items-center justify-between space-x-3">
-                        <button type="button" class="flex items-center justify-center w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-3">
-                            <PaperClipIcon class="tex-gray-600 w-4 h-4 transform -rotate-45" />
+                        <AppSecondaryButton type="button" flex>
+                            <AppPaperClipIcon />
                             <span class="ml-1">Attach</span>
-                        </button>
-                        <button type="submit" class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3">
+                        </AppSecondaryButton>
+
+                        <AppPrimaryButton type="submit">
                             <span>Submit</span>
-                        </button>
+                        </AppPrimaryButton>
                     </div>
                 </form>
             </div>
@@ -117,9 +116,21 @@
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
-import { PaperClipIcon } from '@heroicons/vue/20/solid'
+import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
+import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
+import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
+import AppTextarea from '@/Components/UI/AppTextarea.vue'
+import AppInput from '@/Components/UI/AppInput.vue'
+import AppSelect from '@/Components/UI/AppSelect.vue'
 
 const canLogin = computed(() => usePage().props.value.canLogin)
 const canRegister = computed(() => usePage().props.value.canRegister)
 const authUser = computed(() => usePage().props.value.auth.user)
+
+const categories = [
+    'Category One',
+    'Category One',
+    'Category One',
+    'Category One',
+]
 </script>
