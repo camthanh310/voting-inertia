@@ -1,0 +1,20 @@
+{
+    "include": ["./resources/js/**/*"],
+    "compilerOptions": {
+        "allowJs": true,
+        "strict": true,
+        "baseUrl": ".",
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "paths": {
+            "@/*": ["./resources/js/*"],
+            "@/Components": ["./resources/js/Components/*"]
+        }
+    },
+    "vueCompilerOptions": {
+        "optionsWrapper": [
+            "(await import('vue')).defineComponent(",
+            ")"
+        ]
+    }
+}
