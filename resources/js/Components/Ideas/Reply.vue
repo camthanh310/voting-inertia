@@ -10,19 +10,20 @@
         </PopoverButton>
 
         <AppPopperTransition>
-            <PopoverPanel class="absolute z-10 w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
+            <PopoverPanel class="absolute z-10 w-64 md:w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
                 <AppForm>
                     <div>
                         <AppTextarea id="post-comment" placeholder="Go ahead, don't be shy. Share your thoughts ..."  />
                     </div>
 
-                    <div class="flex items-center space-x-3">
-                        <AppPrimaryButton type="submit" size="text-sm">
+                    <div class="flex flex-col md:flex-row items-center md:space-x-3">
+                        <AppPrimaryButton type="submit" size="text-sm" width="w-full md:w-1/2">
                             Post Comment
                         </AppPrimaryButton>
                         <AppSecondaryButton
                             flex
-                            width="w-32"
+                            width="w-full md:w-32"
+                            class="mt-2 md:mt-0"
                         >
                             <AppPaperClipIcon />
                             <span class="ml-1">Attach</span>

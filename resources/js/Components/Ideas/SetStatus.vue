@@ -11,7 +11,7 @@
         </PopoverButton>
 
         <AppPopperTransition>
-            <PopoverPanel class="absolute z-20 w-76 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
+            <PopoverPanel class="absolute z-20 w-64 md:w-76 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
                 <AppForm>
                     <div class="space-y-2">
                         <div v-for="option in options" :key=option.value>

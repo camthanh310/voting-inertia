@@ -1,10 +1,10 @@
 <template>
-    <header class="flex items-center justify-between px-8 py-4">
+    <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4">
         <a href="#">
             <ApplicationLogo />
         </a>
 
-        <div class="flex items-center">
+        <div class="flex items-center mt-2 md:mt-0">
             <!-- v-if has route login -->
             <div v-if="canLogin" class="px-6 py-4">
                 <!-- v-if auth -->
@@ -27,10 +27,10 @@
         </div>
     </header>
 
-    <main class="container mx-auto max-w-custom flex">
-        <div class="w-70 mr-5">
+    <main class="container mx-auto max-w-custom flex flex-col md:flex-row">
+        <div class="w-70 mx-auto md:mx-0 md:mr-5">
             <div
-                class="bg-white border-2 border-blue rounded-xl mt-16"
+                class="bg-white md:sticky md:top-8 border-2 border-blue rounded-xl mt-16"
                 style="
                     border-image-source: linear-gradient(to bottom, rgba(50, 138, 241, 0.22), rgba(99, 123, 255, 0));
                     border-image-slice: 1;
@@ -46,7 +46,7 @@
                     </p>
                 </div>
 
-                <form action="#" class="space-y-4 px-4 py-6">
+                <AppForm>
                     <div>
                         <AppInput placeholder="Your Idea" />
                     </div>
@@ -69,12 +69,12 @@
                             <span>Submit</span>
                         </AppPrimaryButton>
                     </div>
-                </form>
+                </AppForm>
             </div>
         </div>
 
-        <div class="w-175">
-            <nav class="flex items-center justify-between text-xs">
+        <div class="w-full px-2 md:px-0 md:w-175">
+            <nav class="hidden md:flex items-center justify-between text-xs">
                 <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
                     <li>
                         <a href="#" class="border-b-4 pb-3 border-blue">All Ideas (87)</a>
@@ -122,6 +122,7 @@ import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
 import AppTextarea from '@/Components/UI/AppTextarea.vue'
 import AppInput from '@/Components/UI/AppInput.vue'
 import AppSelect from '@/Components/UI/AppSelect.vue'
+import AppForm from '@/Components/UI/AppForm.vue'
 
 const canLogin = computed(() => usePage().props.value.canLogin)
 const canRegister = computed(() => usePage().props.value.canRegister)

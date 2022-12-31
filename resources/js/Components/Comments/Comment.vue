@@ -8,6 +8,8 @@
                 : 'before:w-[23px] before:h-0.7 before:bg-gray-lighter before:-left-10'
         ]"
         :has-title="idea.is_admin"
+        :has-vote="false"
+        card-footer-class="items-center"
     >
         <template #title>
             Status Changed to "Under Consideration"

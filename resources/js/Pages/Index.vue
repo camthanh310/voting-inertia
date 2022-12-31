@@ -1,7 +1,7 @@
 <template>
     <AppLayout>
-        <div class="fliters flex space-x-6">
-            <div class="w-1/3">
+        <div class="fliters flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
+            <div class="w-full md:w-1/3">
                 <AppSelect id="category" :options="categories" />
             </div>
 
@@ -9,7 +9,7 @@
                 <AppSelect id="other-filters" :options="filters" />
             </div>
 
-            <div class="w-2/3 relative">
+            <div class="w-full md:w-2/3 relative">
                 <AppInput
                     size=""
                     type="search"
@@ -32,7 +32,7 @@
                 class="hover:shadow-card transition duration-150 ease-in cursor-pointer"
             >
                 <template #left-panel>
-                    <div class="border-r border-gray-100 px-5 py-8">
+                    <div class="hidden md:block border-r border-gray-100 px-5 py-8">
                         <div class="text-center">
                             <div class="font-semibold text-2xl">12</div>
                             <div class="text-gray-500">Votes</div>

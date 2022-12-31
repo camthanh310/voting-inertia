@@ -10,7 +10,7 @@
         </PopoverButton>
 
         <AppPopperTransition>
-            <PopoverPanel as="ul" class="absolute z-10 w-44 font-semibold text-left bg-white shadow-lg rounded-xl py-3 ml-8 hover:shadow-dialog">
+            <PopoverPanel as="ul" class="absolute z-10 w-44 font-semibold text-left bg-white shadow-dialog rounded-xl py-3 md:ml-8 top-8 md:top-6 right-0 md:left-0">
                 <li>
                     <a href="#" class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Mark as Spam</a>
                 </li>

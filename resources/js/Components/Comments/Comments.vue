@@ -1,5 +1,5 @@
 <template>
-    <div class="relative space-y-6 ml-22 pt-4 my-8 mt-1 before:absolute before:block before:top-0 before:-left-10 before:content-[''] before:w-0.7 before:h-full before:bg-gray-lighter">
+    <div class="relative space-y-6 md:ml-22 pt-4 my-8 mt-1 before:absolute before:block before:top-0 before:-left-10 before:content-[''] before:w-0.7 before:h-full before:bg-gray-lighter">
         <Comment
             v-for="idea in ideas"
             :key="idea.id"
