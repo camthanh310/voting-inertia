@@ -24,9 +24,9 @@
             </div>
         </div>  <!-- end filters -->
 
-        <div class="space-y-6 my-6">
+        <div class="space-y-6 my-6" v-if="ideas.data.length">
             <IdeaCard
-                v-for="idea in ideasList"
+                v-for="idea in ideas.data"
                 :key="idea.id"
                 :idea="idea"
                 class="hover:shadow-card transition duration-150 ease-in cursor-pointer"
@@ -88,8 +88,8 @@ import { computed } from 'vue';
 
 const props = defineProps({
     ideas: {
-        type: Array,
-        default: ([])
+        type: Object,
+        default: () => ({})
     }
 })
 

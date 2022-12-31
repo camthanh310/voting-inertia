@@ -5,7 +5,7 @@
         <div class="flex flex-col md:flex-row flex-1 px-2 py-6">
             <div class="flex-none mx-2 md:mx-0">
                 <Link
-                    :href="route('idea.show', { idea: idea })"
+                    :href="ideaUrl"
                     class="flex-none"
                 >
                     <img :src="`https://source.unsplash.com/200x200/?face&crop=face&v=${idea.id}`" alt="avatar" class="w-14 h-14 rounded-xl">
@@ -14,7 +14,7 @@
 
             <div class="w-full flex flex-col justify-between mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold mt-2 md:mt-0" v-if="hasTitle">
-                    <Link :href="route('idea.show', { idea: idea })" class="hover:underline">
+                    <Link :href="ideaUrl" class="hover:underline">
                         <slot name="title">
                             {{ idea.title }}
                         </slot>
@@ -62,8 +62,9 @@
 import IdeaAction from '@/Components/Shares/IdeaAction.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { Link } from '@inertiajs/inertia-vue3'
+import { computed } from 'vue'
 
-defineProps({
+const props = defineProps({
     idea: {
         type: Object,
         required: true
@@ -85,4 +86,6 @@ defineProps({
         default: 'flex-col md:flex-row md:items-center'
     }
 })
+
+const ideaUrl = computed(() => `/ideas/${props.idea.slug}`)
 </script>
