@@ -9,7 +9,9 @@
         "paths": {
             "@/*": ["./resources/js/*"],
             "@/Components": ["./resources/js/Components/*"]
-        }
+        },
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
     },
     "vueCompilerOptions": {
         "optionsWrapper": [

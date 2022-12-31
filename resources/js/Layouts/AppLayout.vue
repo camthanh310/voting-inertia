@@ -1,8 +1,10 @@
 <template>
+    <Head :title="title" />
+
     <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4">
-        <a href="#">
+        <Link :href="route('idea.index')">
             <ApplicationLogo />
-        </a>
+        </Link>
 
         <div class="flex items-center mt-2 md:mt-0">
             <!-- v-if has route login -->
@@ -123,6 +125,7 @@ import AppTextarea from '@/Components/UI/AppTextarea.vue'
 import AppInput from '@/Components/UI/AppInput.vue'
 import AppSelect from '@/Components/UI/AppSelect.vue'
 import AppForm from '@/Components/UI/AppForm.vue'
+import { Head, Link } from '@inertiajs/inertia-vue3'
 
 const canLogin = computed(() => usePage().props.value.canLogin)
 const canRegister = computed(() => usePage().props.value.canRegister)
@@ -134,4 +137,11 @@ const categories = [
     'Category One',
     'Category One',
 ]
+
+const props = defineProps({
+    title: {
+        type: String,
+        default: ''
+    }
+})
 </script>

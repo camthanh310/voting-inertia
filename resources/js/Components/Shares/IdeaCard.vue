@@ -4,18 +4,21 @@
 
         <div class="flex flex-col md:flex-row flex-1 px-2 py-6">
             <div class="flex-none mx-2 md:mx-0">
-                <a href="#" class="flex-none">
+                <Link
+                    :href="route('idea.show', { idea: idea })"
+                    class="flex-none"
+                >
                     <img :src="`https://source.unsplash.com/200x200/?face&crop=face&v=${idea.id}`" alt="avatar" class="w-14 h-14 rounded-xl">
-                </a>
+                </Link>
             </div>
 
             <div class="w-full flex flex-col justify-between mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold mt-2 md:mt-0" v-if="hasTitle">
-                    <a href="#" class="hover:underline">
+                    <Link :href="route('idea.show', { idea: idea })" class="hover:underline">
                         <slot name="title">
                             {{ idea.title }}
                         </slot>
-                    </a>
+                    </Link>
                 </h4>
 
                 <div
@@ -30,7 +33,7 @@
                     :class="cardFooterClass"
                 >
                     <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
-                        <slot name="tag" />
+                        <slot name="tag" :idea="idea" />
                     </div>
 
                     <div class="flex items-center space-x-2 mt-4 md:mt-0">
@@ -57,7 +60,8 @@
 
 <script setup>
 import IdeaAction from '@/Components/Shares/IdeaAction.vue'
-import AppSecondaryButton from '../UI/AppSecondaryButton.vue';
+import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
+import { Link } from '@inertiajs/inertia-vue3'
 
 defineProps({
     idea: {

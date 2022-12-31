@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout :title="idea.title">
         <div>
             <a href="#" class="flex items-center font-semibold hover:underline">
                 <ChevronLeftIcon class="w-4 h-4" />
@@ -18,11 +18,11 @@
                 <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
             </template>
 
-            <template #tag>
+            <template #tag="{ idea }">
                 <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
-                    <div class="hidden md:block font-bold text-gray-900">John Doe</div>
+                    <div class="hidden md:block font-bold text-gray-900">{{ idea.user.name }}</div>
                     <div class="hidden md:block">&bull;</div>
-                    <div>10 hours ago</div>
+                    <div>{{ diffForHumans(idea.created_at) }}</div>
                     <div>&bull;</div>
                     <div>Category 1</div>
                     <div>&bull;</div>
@@ -60,10 +60,14 @@ import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 import Reply from '@/Components/Ideas/Reply.vue'
 import SetStatus from '@/Components/Ideas/SetStatus.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
+import { useDateHelpers } from '@/Composables/useDateHelpers'
 
-const idea = {
-    id: 1,
-    title: 'A random title can go here',
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis officiis unde nulla eos harum veniam nam animi qui commodi, mollitia aspernatur dolor ipsa aperiam, neque rerum magnam eligendi vel temporibus officia accusantium possimus. Rem, quas. Quas sequi neque cupiditate, nemo error, explicabo veritatis enim non repudiandae voluptatum sunt magnam ipsa eos quisquam debitis ipsum nostrum quae praesentium exercitationem porro dolores. Perspiciatis quidem id, necessitatibus molestiae nam modi perferendis, qui enim debitis numquam sapiente quo nihil! Consectetur incidunt ad laborum odit! Aspernatur voluptatum voluptas quidem labore veritatis, modi odio consectetur sit dolore pariatur recusandae sequi ex natus maiores! Hic, est! Quidem.',
-}
+defineProps({
+    idea: {
+        type: Object,
+        required: true
+    }
+})
+
+const { diffForHumans } = useDateHelpers()
 </script>
