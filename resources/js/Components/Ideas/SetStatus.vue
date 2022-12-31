@@ -1,13 +1,13 @@
 <template>
     <Popover class="relative">
         <PopoverButton
-            :as="AppSecondaryButton"
-            width="w-36"
-            size="text-sm"
-            flex
+            as="div"
+            esc
         >
-            <span>Set Status</span>
-            <ChevronDownIcon class="w-4 h-4 ml-2" />
+            <AppSecondaryButton width="w-36" size="text-sm" flex>
+                <span>Set Status</span>
+                <ChevronDownIcon class="w-4 h-4 ml-2" />
+            </AppSecondaryButton>
         </PopoverButton>
 
         <AppPopperTransition>

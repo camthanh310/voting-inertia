@@ -2,11 +2,9 @@
     <Popover class="relative">
         <PopoverButton
             esc
-            :as="AppPrimaryButton"
-            width="w-32"
-            size="text-sm"
+            as="div"
         >
-            Reply
+            <AppPrimaryButton width="w-32" size="text-sm">Reply</AppPrimaryButton>
         </PopoverButton>
 
         <AppPopperTransition>
