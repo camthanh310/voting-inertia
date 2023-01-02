@@ -8,13 +8,15 @@
                     :href="ideaUrl"
                     class="flex-none"
                 >
-                    <img :src="`https://source.unsplash.com/200x200/?face&crop=face&v=${idea.id}`" alt="avatar" class="w-14 h-14 rounded-xl">
+                    <slot name="card-image">
+                        <img :src="`https://source.unsplash.com/200x200/?face&crop=face&v=${idea.id}`" alt="avatar" class="w-14 h-14 rounded-xl">
+                    </slot>
                 </Link>
             </div>
 
             <div class="w-full flex flex-col justify-between mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold mt-2 md:mt-0" v-if="hasTitle">
-                    <Link :href="ideaUrl" class="hover:underline">
+                    <Link :href="ideaUrl" :class="{ 'hover:underline': ideaUrl }">
                         <slot name="title">
                             {{ idea.title }}
                         </slot>
@@ -25,7 +27,9 @@
                     class="text-gray-600 mt-3"
                     :class="{ 'line-clamp-3': limit }"
                 >
-                    {{ idea.description }}
+                    <slot name="description">
+                        {{ idea.description }}
+                    </slot>
                 </div>
 
                 <div
@@ -39,7 +43,9 @@
                     <div class="flex items-center space-x-2 mt-4 md:mt-0">
                         <slot name="action" />
 
-                        <IdeaAction />
+                        <slot name="idea-action">
+                            <IdeaAction />
+                        </slot>
                     </div>
 
                     <div class="flex items-center md:hidden mt-4 md:mt-0" v-if="hasVote">
@@ -87,5 +93,5 @@ const props = defineProps({
     }
 })
 
-const ideaUrl = computed(() => `/ideas/${props.idea.slug}`)
+const ideaUrl = computed(() => props.idea.slug ? `/ideas/${props.idea.slug}` : '')
 </script>

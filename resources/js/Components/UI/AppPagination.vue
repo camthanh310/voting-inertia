@@ -1,32 +1,43 @@
 <template>
    <div class="flex flex-1 justify-between">
-        <component
-            :is="prevPageUrl ? Link : 'span'"
-            :href="prevPageUrl"
+        <button
             class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            :class="{ 'opacity-50 cursor-not-allowed': !prevPageUrl }"
+            @click="prevPage"
+            v-if="prevPageUrl"
         >
             <ChevronDoubleLeftIcon class="w-4 h-4 mr-2" />
             <span>Previous</span>
-        </component>
+        </button>
+        <span
+            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 opacity-50 cursor-not-allowed"
+            v-else
+        >
+            <ChevronDoubleLeftIcon class="w-4 h-4 mr-2" />
+            <span>Previous</span>
+        </span>
 
-        <component
-            :is="nextPageUrl ? Link : 'span'"
-            :href="nextPageUrl"
+        <button
             class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            :class="{ 'opacity-50 cursor-not-allowed': !nextPageUrl }"
+            @click="nextPage"
+            v-if="nextPageUrl"
         >
             <span>Next</span>
             <ChevronDoubleRightIcon class="w-4 h-4 ml-2" />
-        </component>
+        </button>
+        <span
+            v-else
+            class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 opacity-50 cursor-not-allowed"
+        >
+            <span>Next</span>
+            <ChevronDoubleRightIcon class="w-4 h-4 ml-2" />
+        </span>
   </div>
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/inertia-vue3'
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
 
-defineProps({
+const props = defineProps({
     nextPageUrl: {
         type: String,
         default: null
@@ -36,4 +47,14 @@ defineProps({
         default: null
     }
 })
+
+const emit = defineEmits(['on-next-page', 'on-prev-page'])
+
+function nextPage() {
+    emit('on-next-page', props.nextPageUrl)
+}
+
+function prevPage() {
+    emit('on-prev-page', props.prevPageUrl)
+}
 </script>

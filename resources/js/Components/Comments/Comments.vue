@@ -1,15 +1,31 @@
 <template>
     <div class="relative space-y-6 md:ml-22 pt-4 my-8 mt-1 before:absolute before:block before:top-0 before:-left-10 before:content-[''] before:w-0.7 before:h-full before:bg-gray-lighter">
-        <Comment
-            v-for="idea in ideas"
-            :key="idea.id"
-            :idea="idea"
-        />
+        <template v-if="completed">
+            <Comment
+                v-for="idea in ideas"
+                :key="idea.id"
+                :idea="idea"
+            />
+        </template>
+        <template v-else>
+            <CommentLoading
+                v-for="n in 5"
+                :key="n"
+            />
+        </template>
     </div>
 </template>
 
 <script setup>
 import Comment from '@/Components/Comments/Comment.vue'
+import CommentLoading from '@/Components/Comments/CommentLoading.vue'
+
+defineProps({
+    completed: {
+        type: Boolean,
+        default: false
+    }
+})
 
 const ideas = [
     { id: 1, user: 'John Doe', is_admin: false, description: 'hello world' },

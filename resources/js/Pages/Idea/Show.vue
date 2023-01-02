@@ -9,47 +9,78 @@
             </a>
         </div>
 
-        <IdeaCard
-            :idea="idea"
-            :limit="false"
-            class="mt-4"
-        >
-            <template #action>
-                <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+
+        <div class="mt-4">
+            <template v-if="completed">
+                <IdeaCard
+                    :idea="idea"
+                    :limit="false"
+                >
+                    <template #action>
+                        <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+                    </template>
+                    <template #tag="{ idea }">
+                        <div class="hidden md:block font-bold text-gray-900">{{ idea.user.name }}</div>
+                        <div class="hidden md:block">&bull;</div>
+                        <div>{{ diffForHumans(idea.created_at) }}</div>
+                        <div>&bull;</div>
+                        <div>Category 1</div>
+                        <div>&bull;</div>
+                        <div class="text-gray-900">3 Comments</div>
+                    </template>
+                </IdeaCard>
             </template>
 
-            <template #tag="{ idea }">
-                <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
-                    <div class="hidden md:block font-bold text-gray-900">{{ idea.user.name }}</div>
-                    <div class="hidden md:block">&bull;</div>
-                    <div>{{ diffForHumans(idea.created_at) }}</div>
-                    <div>&bull;</div>
-                    <div>Category 1</div>
-                    <div>&bull;</div>
-                    <div class="text-gray-900">3 Comments</div>
-                </div>
+            <template v-else>
+                <IdeaLoading>
+                    <template #tag>
+                        <div class="hidden md:block font-bold text-gray-900 text-transparent bg-slate-200 h-6">John Doe</div>
+                        <div class="hidden md:block">&bull;</div>
+                        <div class="text-transparent bg-slate-200 h-6">23 hours ago</div>
+                        <div>&bull;</div>
+                        <div class="text-transparent bg-slate-200 h-6">Category 1</div>
+                        <div>&bull;</div>
+                        <div class="text-transparent bg-slate-200 h-6">3 Comments</div>
+                    </template>
+                </IdeaLoading>
             </template>
-        </IdeaCard>
+        </div>
 
         <div class="buttons-container flex items-center justify-between mt-6">
             <div class="flex flex-col md:flex-row items-center space-x-4 md:ml-6">
-                <Reply />
-                <SetStatus class="mt-2 md:mt-0" />
+                <template v-if="completed">
+                    <Reply />
+                    <SetStatus class="mt-2 md:mt-0" />
+                </template>
+                <template v-else>
+                    <div class="bg-slate-200 w-32 h-11 rounded-xl px-6 py-3"></div>
+                    <div class="bg-slate-200 w-36 h-11 rounded-xl px-6 py-3 mt-2 md:mt-0"></div>
+                </template>
             </div>
 
             <div class="hidden md:flex items-center space-x-3">
                 <div class="bg-white font-semibold text-center rounded-xl px-3 py-2">
-                    <div class="text-xl leading-snug">12</div>
-                    <div class="text-gray-400 text-xs leading-none">Votes</div>
+                    <div
+                        class="text-xl leading-snug"
+                        :class="{'bg-slate-200 text-transparent': !completed}"
+                    >
+                        12
+                    </div>
+                    <div
+                        class="text-gray-400 text-xs leading-none"
+                        :class="{'bg-slate-200 text-transparent': !completed}"
+                    >
+                        Votes
+                    </div>
                 </div>
 
-                <AppSecondaryButton type="button" class="uppercase" width="w-32">
+                <AppSecondaryButton type="button" class="uppercase" width="w-32" :class="{'bg-slate-200 text-transparent pointer-events-none': !completed}">
                     Vote
                 </AppSecondaryButton>
             </div>
         </div> <!-- end buttons-container  -->
 
-        <Comments />
+        <Comments :completed="completed" />
     </AppLayout>
 </template>
 
@@ -61,8 +92,11 @@ import Reply from '@/Components/Ideas/Reply.vue'
 import SetStatus from '@/Components/Ideas/SetStatus.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { useDateHelpers } from '@/Composables/useDateHelpers'
+import { Inertia } from '@inertiajs/inertia'
+import { ref } from 'vue'
+import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 
-defineProps({
+const props = defineProps({
     idea: {
         type: Object,
         required: true
@@ -70,4 +104,22 @@ defineProps({
 })
 
 const { diffForHumans } = useDateHelpers()
+
+const completed = ref(false)
+Inertia.visit(
+    route('idea.show', { idea: props.idea }),
+    {
+        method: 'GET',
+        preserveState: true,
+        onBefore: visit => {
+            completed.value = visit.completed
+        },
+        onError: errors => {
+            console.log('onError', errors);
+        },
+        onFinish: visit => {
+            completed.value = visit.completed
+        },
+    }
+)
 </script>
