@@ -7,21 +7,23 @@
         </Link>
 
         <div class="flex items-center mt-2 md:mt-0">
-            <!-- v-if has route login -->
             <div v-if="canLogin" class="px-6 py-4">
-                <!-- v-if auth -->
-                <a href="#" v-if="authUser">
-                    Logout
-                </a>
-                <!-- v-else -->
-                <a href="#" class="text-sm text-gray-700 dark:text-gray-500 underline" v-else>
-                    Log in
-                </a>
+                <template v-if="authUser">
+                    <Link :href="route('logout')" method="post" as="button">
+                        Logout
+                    </Link>
+                    <Link :href="route('profile.edit')">
+                        Profile
+                    </Link>
+                </template>
 
-                <!-- v-if has route register -->
-                <a href="#" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline" v-if="canRegister">
+                <Link :href="route('login')" class="text-sm text-gray-700 dark:text-gray-500 underline" v-else>
+                    Log in
+                </Link>
+
+                <Link :href="route('register')" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline" v-if="canRegister">
                     Register
-                </a>
+                </Link>
             </div>
             <a href="#">
                 <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="avatar" class="w-10 h-10 rounded-full">

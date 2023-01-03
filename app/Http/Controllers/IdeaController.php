@@ -17,7 +17,7 @@ class IdeaController extends Controller
     public function index()
     {
         return Inertia::render('Idea/Index', [
-            'ideas' => Idea::query()->simplePaginate()
+            'ideas' => Idea::query()->simplePaginate(Idea::PAGINATION_COUNT)
         ]);
     }
 
