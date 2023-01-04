@@ -27,10 +27,12 @@
         <div class="space-y-6 my-6">
             <template v-if="completed">
                 <IdeaCard
-                    v-for="idea in ideasList"
+                    v-for="(idea, index) in ideasList"
                     :key="idea.id"
                     :idea="idea"
                     class="hover:shadow-card transition duration-150 ease-in cursor-pointer"
+                    ref="ideaLinksRef"
+                    @click="linkToIdea($event, index)"
                 >
                     <template #left-panel>
                         <div class="hidden md:block border-r border-gray-100 px-5 py-8">
@@ -169,6 +171,14 @@ function prevPage(prevUrl) {
     loadIdea()
 }
 
+const ideaLinksRef = ref([])
+function linkToIdea(event, index) {
+    const target = event.target.tagName.toLowerCase()
+    const ignores = ['button', 'svg', 'path', 'a']
+    if (!ignores.includes(target)) {
+        ideaLinksRef.value[index].ideaLinkRef.$el.click()
+    }
+}
 
 onMounted(() => {
     loadIdea()

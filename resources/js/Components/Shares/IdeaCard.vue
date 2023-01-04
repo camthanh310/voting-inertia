@@ -16,7 +16,7 @@
 
             <div class="w-full flex flex-col justify-between mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold mt-2 md:mt-0" v-if="hasTitle">
-                    <Link :href="ideaUrl" :class="{ 'hover:underline': ideaUrl }">
+                    <Link :href="ideaUrl" :class="{ 'hover:underline': ideaUrl }" ref="ideaLinkRef">
                         <slot name="title">
                             {{ idea.title }}
                         </slot>
@@ -68,7 +68,7 @@
 import IdeaAction from '@/Components/Shares/IdeaAction.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { Link } from '@inertiajs/inertia-vue3'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
     idea: {
@@ -94,4 +94,9 @@ const props = defineProps({
 })
 
 const ideaUrl = computed(() => props.idea.slug ? `/ideas/${props.idea.slug}` : '')
+const ideaLinkRef = ref(null)
+
+defineExpose({
+    ideaLinkRef
+})
 </script>

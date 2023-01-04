@@ -7,8 +7,7 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "paths": {
-            "@/*": ["./resources/js/*"],
-            "@/Components": ["./resources/js/Components/*"]
+            "@/*": ["./resources/js/*"]
         },
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true
