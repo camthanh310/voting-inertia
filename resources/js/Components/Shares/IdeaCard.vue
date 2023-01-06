@@ -9,7 +9,7 @@
                     class="flex-none"
                 >
                     <slot name="card-image">
-                        <img :src="`https://source.unsplash.com/200x200/?face&crop=face&v=${idea.id}`" alt="avatar" class="w-14 h-14 rounded-xl">
+                        <img :src="idea.user.avatar_url" alt="avatar" class="w-14 h-14 rounded-xl">
                     </slot>
                 </Link>
             </div>

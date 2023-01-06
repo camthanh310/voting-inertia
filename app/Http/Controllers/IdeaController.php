@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
+use App\Http\Resources\IdeaResource;
 use App\Models\Idea;
 use Inertia\Inertia;
 
@@ -16,8 +17,10 @@ class IdeaController extends Controller
      */
     public function index()
     {
+        $idea = Idea::query()->with(['user'])->simplePaginate(Idea::PAGINATION_COUNT);
+
         return Inertia::render('Idea/Index', [
-            'ideas' => Idea::query()->simplePaginate(Idea::PAGINATION_COUNT)
+            'ideas' => IdeaResource::collection($idea)
         ]);
     }
 
@@ -51,7 +54,7 @@ class IdeaController extends Controller
     public function show(Idea $idea)
     {
         return Inertia::render('Idea/Show', [
-            'idea' => $idea->load('user')
+            'idea' => IdeaResource::make($idea->load('user'))
         ]);
     }
 
