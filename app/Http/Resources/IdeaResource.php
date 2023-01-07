@@ -22,7 +22,12 @@ class IdeaResource extends JsonResource
             'title' => $this->title,
             'user' => [
                 'id' => $this->user_id,
+                'name' => $this->user->name,
                 'avatar_url' => $this->user->getAvatar(),
+            ],
+            'category' => [
+                'id' => $this->category_id,
+                'name' => $this->category->name
             ]
         ];
     }

@@ -1,17 +1,23 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Idea;
 
 use function Pest\Laravel\get;
 
 it('list of ideas shows on main page', function () {
+    $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+    $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+
     $ideaOne = Idea::factory()->create([
         'title' => 'My First Idea',
+        'category_id' => $categoryOne->id,
         'description' => 'My First Description idea'
     ]);
 
     $ideaTwo = Idea::factory()->create([
         'title' => 'My Second Idea',
+        'category_id' => $categoryTwo->id,
         'description' => 'My Second Description idea'
     ]);
 
@@ -19,24 +25,32 @@ it('list of ideas shows on main page', function () {
         ->assertSuccessful()
         ->assertSee($ideaOne->title)
         ->assertSee($ideaOne->description)
+        ->assertSee($categoryOne->name)
         ->assertSee($ideaTwo->title)
-        ->assertSee($ideaTwo->description);
+        ->assertSee($ideaTwo->description)
+        ->assertSee($categoryTwo->name);
 });
 
 it('single idea shows correctly on the show page', function () {
+    $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+
     $idea = Idea::factory()->create([
         'title' => 'My First idea',
+        'category_id' => $categoryOne->id,
         'description' => 'My First idea description'
     ]);
 
     get(route('idea.show', $idea))
         ->assertSuccessful()
         ->assertSee($idea->title)
-        ->assertSee($idea->description);
+        ->assertSee($idea->description)
+        ->assertSee($categoryOne->name);
 });
 
 it('ideas pagination works', function () {
-    Idea::factory(Idea::PAGINATION_COUNT + 1)->create();
+    $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+
+    Idea::factory(Idea::PAGINATION_COUNT + 1)->create(['category_id' => $categoryOne->id]);
 
     $ideaOne = Idea::find(1);
     $ideaOne->title = 'My First Idea';
@@ -56,13 +70,18 @@ it('ideas pagination works', function () {
 });
 
 it('same idea title different slugs', function () {
+    $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+    $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+
     $ideaOne = Idea::factory()->create([
         'title' => 'My Idea',
+        'category_id' => $categoryOne->id,
         'description' => 'My First Idea Description',
     ]);
 
     $ideaTwo = Idea::factory()->create([
         'title' => 'My Idea',
+        'category_id' => $categoryTwo->id,
         'description' => 'Another Idea Description',
     ]);
 
