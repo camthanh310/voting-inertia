@@ -61,8 +61,8 @@
                         <div>&bull;</div>
                         <div class="text-gray-900">3 Comments</div>
                     </template>
-                    <template #action>
-                        <div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>
+                    <template #action="{ idea }">
+                        <IdeaStatus :idea="idea" />
                     </template>
                 </IdeaCard>
                 <AppPagination
@@ -111,6 +111,7 @@ import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { computed, onMounted, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
+import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 
 const props = defineProps({
     ideas: {

@@ -28,6 +28,11 @@ class IdeaResource extends JsonResource
             'category' => [
                 'id' => $this->category_id,
                 'name' => $this->category->name
+            ],
+            'status' => [
+                'id' => $this->status_id,
+                'name' => $this->status->name,
+                'classes' => $this->status->classes
             ]
         ];
     }

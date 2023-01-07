@@ -17,6 +17,7 @@ class Idea extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'status_id',
         'title',
         'slug',
         'description',
@@ -39,5 +40,10 @@ class Idea extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
     }
 }

@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="flex items-center space-x-2 mt-4 md:mt-0">
-                        <slot name="action" />
+                        <slot name="action" :idea="idea" />
 
                         <slot name="idea-action">
                             <IdeaAction />

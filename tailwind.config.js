@@ -9,7 +9,11 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
     ],
-
+    safelist: [
+        {
+            pattern: /bg-(red|green|blue|purple|yellow)/,
+        }
+    ],
     theme: {
         extend: {
             colors: {
