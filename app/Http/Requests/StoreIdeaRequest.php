@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Status;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreIdeaRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreIdeaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +25,20 @@ class StoreIdeaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'category_id' => ['required', 'integer'],
+            'title' => ['required', 'min:4'],
+            'description' => ['required', 'min:4'],
         ];
+    }
+
+    public function validate(): array
+    {
+        return array_merge(
+            parent::validated(),
+            [
+                'user_id' => auth()->id(),
+                'status_id' => Status::OPEN
+            ]
+        );
     }
 }

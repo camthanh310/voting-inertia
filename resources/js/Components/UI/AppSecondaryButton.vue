@@ -1,11 +1,12 @@
 <template>
-    <button
+    <component
+        :is="as"
         class="bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in py-3"
         :class="[flex ? 'flex items-center justify-center' : '', height, width, size, paddingX]"
         v-bind="$attrs"
     >
         <slot />
-    </button>
+    </component>
 </template>
 
 <script setup>
@@ -29,6 +30,10 @@ defineProps({
     paddingX: {
         type: String,
         default: 'px-6'
+    },
+    as: {
+        type: String,
+        default: 'button'
     }
 })
 </script>

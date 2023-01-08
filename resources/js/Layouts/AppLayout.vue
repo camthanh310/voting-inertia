@@ -12,18 +12,19 @@
                     <Link :href="route('logout')" method="post" as="button">
                         Logout
                     </Link>
-                    <Link :href="route('profile.edit')">
+                    <!-- <Link :href="route('profile.edit')">
                         Profile
-                    </Link>
+                    </Link> -->
                 </template>
 
-                <Link :href="route('login')" class="text-sm text-gray-700 dark:text-gray-500 underline" v-else>
-                    Log in
-                </Link>
-
-                <Link :href="route('register')" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline" v-if="canRegister">
-                    Register
-                </Link>
+                <template v-else>
+                    <Link :href="route('login')" class="text-sm text-gray-700 dark:text-gray-500 underline">
+                        Log in
+                    </Link>
+                    <Link :href="route('register')" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline" v-if="canRegister">
+                        Register
+                    </Link>
+                </template>
             </div>
             <a href="#">
                 <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="avatar" class="w-10 h-10 rounded-full">
@@ -46,22 +47,26 @@
                 <div class="text-center px-6 py-2 pt-6">
                     <h3 class="font-semibold text-base">Add an idea</h3>
                     <p class="text-xs mt-4">
-                        Let us know what you would like and we'll take a look over!
+                        {{ ideaFormMessage }}
                     </p>
                 </div>
 
-                <AppForm>
+                <AppForm v-if="authUser" @submit.prevent="onSubmit">
                     <div>
-                        <AppInput placeholder="Your Idea" />
+                        <AppInput placeholder="Your Idea" v-model="ideaForm.title" />
+                        <p class="text-red text-xs mt-1" v-if="ideaForm.errors.title">{{ ideaForm.errors.title }}</p>
                     </div>
                     <div>
-                        <AppSelect id="category-add" :options="categories" class="bg-gray-100 text-sm" />
+                        <CategoryDropdown v-model="ideaForm.category_id" />
+                        <p class="text-red text-xs mt-1" v-if="ideaForm.errors.category_id">{{ ideaForm.errors.category_id }}</p>
                     </div>
                     <div>
                         <AppTextarea
                             id="idea"
                             placeholder="Describe your idea"
+                            v-model="ideaForm.description"
                         />
+                        <p class="text-red text-xs mt-1" v-if="ideaForm.errors.description">{{ ideaForm.errors.description }}</p>
                     </div>
                     <div class="flex items-center justify-between space-x-3">
                         <AppSecondaryButton type="button" flex>
@@ -73,7 +78,14 @@
                             <span>Submit</span>
                         </AppPrimaryButton>
                     </div>
+
+                    <AppMessage />
                 </AppForm>
+
+                <div class="my-6 text-center flex flex-col items-center" v-else>
+                    <AppPrimaryButton :as="Link" :href="route('login')" :flex="false" class="inline-block">Login</AppPrimaryButton>
+                    <AppSecondaryButton :as="Link" :href="route('register')" class="inline-block mt-4">Sign Up</AppSecondaryButton>
+                </div>
             </div>
         </div>
 
@@ -119,26 +131,27 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 import { computed } from 'vue'
-import { usePage } from '@inertiajs/inertia-vue3'
+import { useForm, usePage } from '@inertiajs/inertia-vue3'
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
 import AppTextarea from '@/Components/UI/AppTextarea.vue'
 import AppInput from '@/Components/UI/AppInput.vue'
-import AppSelect from '@/Components/UI/AppSelect.vue'
 import AppForm from '@/Components/UI/AppForm.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
+import AppMessage from '@/Components/UI/AppMessage.vue'
+import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 
 const canLogin = computed(() => usePage().props.value.canLogin)
 const canRegister = computed(() => usePage().props.value.canRegister)
 const authUser = computed(() => usePage().props.value.auth.user)
+const ideaFormMessage = computed(() => authUser.value ? 'Let us know what you would like and we\'ll take a look over!' : 'Please login to create an idea.')
 
-const categories = [
-    'Category One',
-    'Category One',
-    'Category One',
-    'Category One',
-]
+const ideaForm = useForm({
+    'title': '',
+    'category_id': 1,
+    'description': ''
+})
 
 const props = defineProps({
     title: {
@@ -146,4 +159,19 @@ const props = defineProps({
         default: ''
     }
 })
+
+function onSubmit() {
+    ideaForm.post(
+        route('idea.store'),
+        {
+            onSuccess: () => {
+                ideaForm.reset('title')
+                ideaForm.reset('description')
+                ideaForm.reset('category_id')
+            },
+            preserveState: true,
+            preserveScroll: true
+        }
+    )
+}
 </script>

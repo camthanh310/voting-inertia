@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreIdeaRequest;
-use App\Http\Requests\UpdateIdeaRequest;
-use App\Http\Resources\IdeaResource;
 use App\Models\Idea;
 use Inertia\Inertia;
+use App\Models\Status;
+use App\Http\Resources\IdeaResource;
+use App\Http\Requests\StoreIdeaRequest;
+use App\Http\Requests\UpdateIdeaRequest;
 
 class IdeaController extends Controller
 {
@@ -17,7 +18,7 @@ class IdeaController extends Controller
      */
     public function index()
     {
-        $idea = Idea::query()->with(['user', 'category', 'status'])->simplePaginate(Idea::PAGINATION_COUNT);
+        $idea = Idea::query()->with(['user', 'category', 'status'])->orderByDesc('id')->simplePaginate(Idea::PAGINATION_COUNT);
 
         return Inertia::render('Idea/Index', [
             'ideas' => IdeaResource::collection($idea)
@@ -42,7 +43,9 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeaRequest $request)
     {
-        //
+        Idea::create($request->validate());
+
+        return to_route('idea.index')->with('success', 'Idea was added successfully.');
     }
 
     /**

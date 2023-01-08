@@ -1,10 +1,11 @@
 <?php
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ use Inertia\Inertia;
 Route::get('/', [IdeaController::class, 'index'])->name('idea.index');
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea.show');
+Route::post('/ideas', [IdeaController::class, 'store'])->name('idea.store');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');

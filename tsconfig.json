@@ -8,14 +8,14 @@
         "jsx": "preserve",
         "paths": {
             "@/*": ["./resources/js/*"]
-        },
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
-    },
-    "vueCompilerOptions": {
-        "optionsWrapper": [
-            "(await import('vue')).defineComponent(",
-            ")"
-        ]
+        }
+        // "esModuleInterop": true,
+        // "allowSyntheticDefaultImports": true
     }
+    // "vueCompilerOptions": {
+    //     "optionsWrapper": [
+    //         "(await import('vue')).defineComponent(",
+    //         ")"
+    //     ]
+    // }
 }
