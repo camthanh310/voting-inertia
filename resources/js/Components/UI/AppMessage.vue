@@ -25,7 +25,7 @@ watch(
         leave-from-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
     >
-        <div class="text-green mt-4" v-if="successMessage">
+        <div class="text-green mt-4" v-if="isVisible">
             {{  successMessage }}
         </div>
     </Transition>

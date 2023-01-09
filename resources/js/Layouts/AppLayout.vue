@@ -34,16 +34,7 @@
 
     <main class="container mx-auto max-w-custom flex flex-col md:flex-row">
         <div class="w-70 mx-auto md:mx-0 md:mr-5">
-            <div
-                class="bg-white md:sticky md:top-8 border-2 border-blue rounded-xl mt-16"
-                style="
-                    border-image-source: linear-gradient(to bottom, rgba(50, 138, 241, 0.22), rgba(99, 123, 255, 0));
-                    border-image-slice: 1;
-                    background-image: linear-gradient(to bottom, #ffffff, #ffffff), linear-gradient(to bottom, rgba(50, 138, 241, 0.22), rgba(99, 123, 255, 0));
-                    background-origin: border-box;
-                    background-clip: content-box, border-box;
-                "
-            >
+            <div class="bg-white md:sticky md:top-8 border-2 border-blue rounded-xl mt-16 border-form-idea">
                 <div class="text-center px-6 py-2 pt-6">
                     <h3 class="font-semibold text-base">Add an idea</h3>
                     <p class="text-xs mt-4">
@@ -74,8 +65,12 @@
                             <span class="ml-1">Attach</span>
                         </AppSecondaryButton>
 
-                        <AppPrimaryButton type="submit">
+                        <AppPrimaryButton type="submit" v-if="!ideaForm.processing">
                             <span>Submit</span>
+                        </AppPrimaryButton>
+                        <AppPrimaryButton type="submit" v-else as="span">
+                            <AppInfiniteLoadingIcon />
+                            <span class="ml-1">Submit</span>
                         </AppPrimaryButton>
                     </div>
 
@@ -141,6 +136,7 @@ import AppForm from '@/Components/UI/AppForm.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import AppMessage from '@/Components/UI/AppMessage.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
+import AppInfiniteLoadingIcon from '@/Components/UI/AppInfiniteLoadingIcon.vue'
 
 const canLogin = computed(() => usePage().props.value.canLogin)
 const canRegister = computed(() => usePage().props.value.canRegister)
@@ -169,7 +165,6 @@ function onSubmit() {
                 ideaForm.reset('description')
                 ideaForm.reset('category_id')
             },
-            preserveState: true,
             preserveScroll: true
         }
     )
