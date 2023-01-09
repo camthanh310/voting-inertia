@@ -32,14 +32,14 @@ it('list of ideas shows on main page', function () {
         ->assertInertia(fn (AssertableInertia $assert) => $assert
             ->component('Idea/Index')
             ->has('ideas.data', 2)
-            ->where('ideas.data.0.title', $ideaOne->title)
-            ->where('ideas.data.0.description', $ideaOne->description)
-            ->where('ideas.data.0.category.name', $categoryOne->name)
-            ->where('ideas.data.0.status.name', $statusOpen->name)
-            ->where('ideas.data.1.title', $ideaTwo->title)
-            ->where('ideas.data.1.description', $ideaTwo->description)
-            ->where('ideas.data.1.category.name', $categoryTwo->name)
-            ->where('ideas.data.1.status.name', $statusConsidering->name)
+            ->where('ideas.data.0.title', $ideaTwo->title)
+            ->where('ideas.data.0.description', $ideaTwo->description)
+            ->where('ideas.data.0.category.name', $categoryTwo->name)
+            ->where('ideas.data.0.status.name', $statusConsidering->name)
+            ->where('ideas.data.1.title', $ideaOne->title)
+            ->where('ideas.data.1.description', $ideaOne->description)
+            ->where('ideas.data.1.category.name', $categoryOne->name)
+            ->where('ideas.data.1.status.name', $statusOpen->name)
     );
 });
 
@@ -79,12 +79,12 @@ it('ideas pagination works', function () {
     $ideaEleven->save();
 
     get('/')
-        ->assertSee($ideaOne->title)
-        ->assertDontSee($ideaEleven->title);
-
-    get('/?page=2')
         ->assertSee($ideaEleven->title)
         ->assertDontSee($ideaOne->title);
+
+    get('/?page=2')
+        ->assertSee($ideaOne->title)
+        ->assertDontSee($ideaEleven->title);
 });
 
 it('same idea title different slugs', function () {
