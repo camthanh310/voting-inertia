@@ -48,7 +48,7 @@
                         <p class="text-red text-xs mt-1" v-if="ideaForm.errors.title">{{ ideaForm.errors.title }}</p>
                     </div>
                     <div>
-                        <CategoryDropdown v-model="ideaForm.category_id" />
+                        <CategoryDropdown v-model="ideaForm.category_id" classes="bg-gray-100 text-sm" />
                         <p class="text-red text-xs mt-1" v-if="ideaForm.errors.category_id">{{ ideaForm.errors.category_id }}</p>
                     </div>
                     <div>

@@ -2,7 +2,7 @@
     <AppLayout title="Home">
         <div class="fliters flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
             <div class="w-full md:w-1/3">
-                <AppSelect id="category" :options="categories" />
+                <CategoryDropdown />
             </div>
 
             <div class="w-1/3">
@@ -112,6 +112,7 @@ import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { computed, onMounted, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
+import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 
 const props = defineProps({
     ideas: {
@@ -121,17 +122,10 @@ const props = defineProps({
 })
 
 const ideasList = computed(() => props.ideas.data)
-const nextPageUrl = computed(() => props.ideas.next_page_url)
-const prevPageUrl = computed(() => props.ideas.prev_page_url)
+const nextPageUrl = computed(() => props.ideas.links.next)
+const prevPageUrl = computed(() => props.ideas.links.prev)
 
 const { diffForHumans } = useDateHelpers()
-
-const categories = [
-    'Category One',
-    'Category One',
-    'Category One',
-    'Category One',
-]
 
 const filters = [
     'Filter One',

@@ -2,6 +2,13 @@
 import AppSelect from '@/Components/UI/AppSelect.vue'
 import { onMounted, ref } from 'vue'
 
+defineProps({
+    classes: {
+        type: String,
+        default: ''
+    }
+})
+
 const categories = ref([])
 
 async function fetchCategories() {
@@ -22,6 +29,6 @@ onMounted(() => {
     <AppSelect
         id="category-add"
         :options="categories"
-        class="bg-gray-100 text-sm"
+        :class="classes"
     />
 </template>
