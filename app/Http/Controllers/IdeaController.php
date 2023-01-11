@@ -18,7 +18,11 @@ class IdeaController extends Controller
      */
     public function index()
     {
-        $idea = Idea::query()->with(['user', 'category', 'status'])->orderByDesc('id')->simplePaginate(Idea::PAGINATION_COUNT);
+        $idea = Idea::query()
+                    ->with(['user', 'category', 'status'])
+                    ->withCount(['votes'])
+                    ->orderByDesc('id')
+                    ->simplePaginate(Idea::PAGINATION_COUNT);
 
         return Inertia::render('Idea/Index', [
             'ideas' => IdeaResource::collection($idea)
@@ -57,7 +61,11 @@ class IdeaController extends Controller
     public function show(Idea $idea)
     {
         return Inertia::render('Idea/Show', [
-            'idea' => IdeaResource::make($idea->load(['user', 'category', 'status']))
+            'idea' => IdeaResource::make(
+                $idea
+                    ->load(['user', 'category', 'status'])
+                    ->loadCount(['votes'])
+            )
         ]);
     }
 

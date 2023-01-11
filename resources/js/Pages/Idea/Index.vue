@@ -37,7 +37,7 @@
                     <template #left-panel>
                         <div class="hidden md:block border-r border-gray-100 px-5 py-8">
                             <div class="text-center">
-                                <div class="font-semibold text-2xl">12</div>
+                                <div class="font-semibold text-2xl">{{ idea.votes_count }}</div>
                                 <div class="text-gray-500">Votes</div>
                             </div>
                             <div class="mt-8">

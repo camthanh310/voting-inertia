@@ -4,10 +4,14 @@ use App\Models\Idea;
 use App\Models\Status;
 
 use App\Models\Category;
+use App\Models\User;
+
 use function Pest\Laravel\get;
 use Inertia\Testing\AssertableInertia;
 
 it('list of ideas shows on main page', function () {
+    $user = User::factory()->create();
+
     $categoryOne = Category::factory()->create(['name' => 'Category 1']);
     $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
 
@@ -15,6 +19,7 @@ it('list of ideas shows on main page', function () {
     $statusConsidering = Status::factory()->create(['name' => 'Considering', 'classes' => 'bg-purple text-white']);
 
     $ideaOne = Idea::factory()->create([
+        'user_id' => $user->id,
         'title' => 'My First Idea',
         'category_id' => $categoryOne->id,
         'status_id' => $statusOpen->id,
@@ -22,6 +27,7 @@ it('list of ideas shows on main page', function () {
     ]);
 
     $ideaTwo = Idea::factory()->create([
+        'user_id' => $user->id,
         'title' => 'My Second Idea',
         'category_id' => $categoryTwo->id,
         'status_id' => $statusConsidering->id,
@@ -44,10 +50,13 @@ it('list of ideas shows on main page', function () {
 });
 
 it('single idea shows correctly on the show page', function () {
+    $user = User::factory()->create();
+
     $categoryOne = Category::factory()->create(['name' => 'Category 1']);
     $statusOpen = Status::factory()->create(['name' => 'Open', 'classes' => 'bg-gray-200']);
 
     $idea = Idea::factory()->create([
+        'user_id' => $user->id,
         'title' => 'My First idea',
         'category_id' => $categoryOne->id,
         'status_id' => $statusOpen->id,
@@ -65,10 +74,16 @@ it('single idea shows correctly on the show page', function () {
 });
 
 it('ideas pagination works', function () {
+    $user = User::factory()->create();
+
     $categoryOne = Category::factory()->create(['name' => 'Category 1']);
     $statusOpen = Status::factory()->create(['name' => 'Open', 'classes' => 'bg-gray-200']);
 
-    Idea::factory(Idea::PAGINATION_COUNT + 1)->create(['category_id' => $categoryOne->id, 'status_id' => $statusOpen->id]);
+    Idea::factory(Idea::PAGINATION_COUNT + 1)->create([
+        'user_id' => $user->id,
+        'category_id' => $categoryOne->id,
+        'status_id' => $statusOpen->id
+    ]);
 
     $ideaOne = Idea::find(1);
     $ideaOne->title = 'My First Idea';
@@ -88,6 +103,8 @@ it('ideas pagination works', function () {
 });
 
 it('same idea title different slugs', function () {
+    $user = User::factory()->create();
+
     $categoryOne = Category::factory()->create(['name' => 'Category 1']);
     $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
 
@@ -95,6 +112,7 @@ it('same idea title different slugs', function () {
     $statusConsidering = Status::factory()->create(['name' => 'Considering', 'classes' => 'bg-purple text-white']);
 
     $ideaOne = Idea::factory()->create([
+        'user_id' => $user->id,
         'title' => 'My Idea',
         'category_id' => $categoryOne->id,
         'status_id' => $statusOpen->id,
@@ -102,6 +120,7 @@ it('same idea title different slugs', function () {
     ]);
 
     $ideaTwo = Idea::factory()->create([
+        'user_id' => $user->id,
         'title' => 'My Idea',
         'category_id' => $categoryTwo->id,
         'status_id' => $statusConsidering->id,

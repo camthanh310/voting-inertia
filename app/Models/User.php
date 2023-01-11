@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -44,7 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function idea(): HasMany
+    public function ideas(): HasMany
     {
         return $this->hasMany(Idea::class);
     }
@@ -67,6 +68,13 @@ class User extends Authenticatable
                     'd' => $defaultUrl
                 ]
             )
+        );
+    }
+
+    public function votes(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Idea::class, 'votes'
         );
     }
 }

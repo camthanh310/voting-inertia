@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Idea;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class IdeaSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,11 @@ class IdeaSeeder extends Seeder
      */
     public function run()
     {
-        Idea::factory(100)->create();
+        User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'john@doe.com'
+        ]);
+
+        User::factory(19)->create();
     }
 }

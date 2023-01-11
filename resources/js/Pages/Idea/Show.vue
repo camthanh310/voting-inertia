@@ -64,7 +64,7 @@
                         class="text-xl leading-snug"
                         :class="{'bg-slate-200 text-transparent': !completed}"
                     >
-                        12
+                        {{ idea.votes_count }}
                     </div>
                     <div
                         class="text-gray-400 text-xs leading-none"
@@ -74,7 +74,12 @@
                     </div>
                 </div>
 
-                <AppSecondaryButton type="button" class="uppercase" width="w-32" :class="{'bg-slate-200 text-transparent pointer-events-none': !completed}">
+                <AppSecondaryButton
+                    type="button"
+                    class="uppercase"
+                    width="w-32"
+                    :class="{'bg-slate-200 text-transparent pointer-events-none': !completed}"
+                >
                     Vote
                 </AppSecondaryButton>
             </div>

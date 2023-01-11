@@ -33,7 +33,8 @@ class IdeaResource extends JsonResource
                 'id' => $this->status_id,
                 'name' => $this->status->name,
                 'classes' => $this->status->classes
-            ]
+            ],
+            'votes_count' => $this->votes_count
         ];
     }
 }
