@@ -62,26 +62,30 @@
                 <div class="bg-white font-semibold text-center rounded-xl px-3 py-2">
                     <div
                         class="text-xl leading-snug"
-                        :class="{'bg-slate-200 text-transparent': !completed}"
+                        :class="{
+                            'bg-slate-200 text-transparent': !completed,
+                            'text-blue': idea.has_voted
+                        }"
                     >
                         {{ idea.votes_count }}
                     </div>
                     <div
                         class="text-gray-400 text-xs leading-none"
-                        :class="{'bg-slate-200 text-transparent': !completed}"
+                        :class="{ 'bg-slate-200 text-transparent': !completed }"
                     >
                         Votes
                     </div>
                 </div>
 
-                <AppSecondaryButton
+                <component
+                    :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
                     type="button"
                     class="uppercase"
                     width="w-32"
-                    :class="{'bg-slate-200 text-transparent pointer-events-none': !completed}"
+                    :class="{ 'bg-slate-200 text-transparent pointer-events-none': !completed }"
                 >
-                    Vote
-                </AppSecondaryButton>
+                    {{ idea.has_voted ? 'Voted' : 'Vote' }}
+                </component>
             </div>
         </div> <!-- end buttons-container  -->
 
@@ -101,6 +105,7 @@ import { Inertia } from '@inertiajs/inertia'
 import { ref } from 'vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
+import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 
 const props = defineProps({
     idea: {

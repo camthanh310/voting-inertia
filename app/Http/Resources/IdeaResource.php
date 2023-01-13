@@ -34,7 +34,8 @@ class IdeaResource extends JsonResource
                 'name' => $this->status->name,
                 'classes' => $this->status->classes
             ],
-            'votes_count' => $this->votes_count
+            'votes_count' => $this->votes_count,
+            'has_voted' => (bool) ($this->vote_by_user ? $this->vote_by_user : $this->isVotedByUser(auth()->user()))
         ];
     }
 }

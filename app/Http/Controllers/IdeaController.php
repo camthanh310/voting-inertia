@@ -8,6 +8,7 @@ use App\Models\Status;
 use App\Http\Resources\IdeaResource;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class IdeaController extends Controller
 {
@@ -19,7 +20,12 @@ class IdeaController extends Controller
     public function index()
     {
         $idea = Idea::query()
-                    ->with(['user', 'category', 'status'])
+                    ->with([
+                        'user',
+                        'category',
+                        'status'
+                    ])
+                    ->withVotedByUser()
                     ->withCount(['votes'])
                     ->orderByDesc('id')
                     ->simplePaginate(Idea::PAGINATION_COUNT);

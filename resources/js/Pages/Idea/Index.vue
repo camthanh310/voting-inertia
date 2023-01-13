@@ -37,11 +37,17 @@
                     <template #left-panel>
                         <div class="hidden md:block border-r border-gray-100 px-5 py-8">
                             <div class="text-center">
-                                <div class="font-semibold text-2xl">{{ idea.votes_count }}</div>
+                                <div
+                                    class="font-semibold text-2xl"
+                                    :class="{ 'text-blue': idea.has_voted }"
+                                >
+                                    {{ idea.votes_count }}
+                                </div>
                                 <div class="text-gray-500">Votes</div>
                             </div>
                             <div class="mt-8">
-                                <AppSecondaryButton
+                                <Component
+                                    :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
                                     type="button"
                                     class="uppercase font-bold"
                                     height=""
@@ -49,8 +55,8 @@
                                     width="w-20"
                                     padding-x="px-4"
                                 >
-                                    Vote
-                                </AppSecondaryButton>
+                                    {{ idea.has_voted ? 'Voted' : 'Vote' }}
+                                </Component>
                             </div>
                         </div>
                     </template>
@@ -113,6 +119,7 @@ import { computed, onMounted, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
+import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 
 const props = defineProps({
     ideas: {

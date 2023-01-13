@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -53,5 +54,27 @@ class Idea extends Model
         return $this->belongsToMany(
             User::class, 'votes'
         );
+    }
+
+    public function isVotedByUser(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $user->votes()
+                    ->where('idea_id', $this->id)
+                    ->exists();
+    }
+
+    public function scopeWithVotedByUser(Builder $builder): Builder
+    {
+        return $builder->addSelect([
+            'vote_by_user' => Vote::query()
+                ->select('id')
+                ->where('user_id', auth()->id())
+                ->whereColumn('idea_id', 'ideas.id')
+                ->limit(1)
+        ]);
     }
 }

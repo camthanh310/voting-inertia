@@ -50,15 +50,24 @@
 
                     <div class="flex items-center md:hidden mt-4 md:mt-0" v-if="hasVote">
                         <div class="bg-gray-100 text-center rounded-xl h-10 px-4 py-2 pr-8">
-                            <div class="text-sm font-bold leading-none">
+                            <div
+                                class="text-sm font-bold leading-none"
+                                :class="{ 'text-blue': idea.has_voted }"
+                            >
                                 {{ idea.votes_count }}
                             </div>
                             <div class="text-xxs font-semibold leading-none text-gray-400">Votes</div>
                         </div>
 
-                        <AppSecondaryButton class="uppercase -mx-5" size="text-xxs" width="w-20" height="h-10">
-                            Vote
-                        </AppSecondaryButton>
+                        <Component
+                            :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
+                            class="uppercase -mx-5"
+                            size="text-xxs"
+                            width="w-20"
+                            height="h-10"
+                        >
+                            {{ idea.has_voted ? 'Voted' : 'Vote' }}
+                        </Component>
                     </div>
                 </div>
             </div>
@@ -71,6 +80,7 @@ import IdeaAction from '@/Components/Shares/IdeaAction.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { Link } from '@inertiajs/inertia-vue3'
 import { computed, ref } from 'vue'
+import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 
 const props = defineProps({
     idea: {
