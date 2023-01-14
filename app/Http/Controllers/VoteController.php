@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Idea;
+use App\Models\Vote;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
 use App\Http\Requests\StoreVoteRequest;
 use App\Http\Requests\UpdateVoteRequest;
-use App\Models\Vote;
 
 class VoteController extends Controller
 {
@@ -34,9 +37,22 @@ class VoteController extends Controller
      * @param  \App\Http\Requests\StoreVoteRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreVoteRequest $request)
+    public function store(Idea $idea, StoreVoteRequest $request)
     {
-        //
+        if (!auth()->check()) {
+            return Inertia::render('Auth/Login', [
+                'canResetPassword' => Route::has('password.request'),
+                'status' => session('status'),
+            ]);
+        }
+
+        if ($request->get('has_voted')) {
+            $idea->removeVote(auth()->user());
+        } else {
+            $idea->vote(auth()->user());
+        }
+
+
     }
 
     /**

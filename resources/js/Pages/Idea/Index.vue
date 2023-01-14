@@ -46,17 +46,14 @@
                                 <div class="text-gray-500">Votes</div>
                             </div>
                             <div class="mt-8">
-                                <Component
-                                    :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
-                                    type="button"
-                                    class="uppercase font-bold"
+                                <IdeaVote
+                                    custom-classes="uppercase font-bold"
                                     height=""
                                     size="text-xxs"
                                     width="w-20"
                                     padding-x="px-4"
-                                >
-                                    {{ idea.has_voted ? 'Voted' : 'Vote' }}
-                                </Component>
+                                    :idea="idea"
+                                />
                             </div>
                         </div>
                     </template>
@@ -109,7 +106,6 @@
 import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 import AppInput from '@/Components/UI/AppInput.vue'
 import AppPagination from '@/Components/UI/AppPagination.vue'
-import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import AppSelect from '@/Components/UI/AppSelect.vue'
 import { useDateHelpers } from '@/Composables/useDateHelpers'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -119,7 +115,7 @@ import { computed, onMounted, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
-import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
+import IdeaVote from '@/Components/Shares/IdeaVote.vue'
 
 const props = defineProps({
     ideas: {

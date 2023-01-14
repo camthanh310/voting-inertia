@@ -1,8 +1,8 @@
 <template>
     <component
-        :is="as"
+        :is="tag"
         class="h-11 bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
-        :class="[flex ? 'flex items-center justify-center' : '', width, size]"
+        :class="[flex ? 'flex items-center justify-center' : '', width, size, customClasses]"
         v-bind="$attrs"
     >
         <slot />
@@ -23,9 +23,13 @@ const props = defineProps({
         type: String,
         default: 'text-xs'
     },
-    as: {
-        type: String,
+    tag: {
+        type: [String, Object],
         default: 'button'
+    },
+    customClasses: {
+        type: [String, Array],
+        default: ''
     }
 })
 </script>

@@ -77,4 +77,14 @@ class Idea extends Model
                 ->limit(1)
         ]);
     }
+
+    public function vote(User $user): void
+    {
+        $this->votes()->attach($user->id);
+    }
+
+    public function removeVote(User $user): void
+    {
+        $this->votes()->detach($user->id);
+    }
 }

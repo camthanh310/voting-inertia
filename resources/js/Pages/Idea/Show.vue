@@ -77,15 +77,11 @@
                     </div>
                 </div>
 
-                <component
-                    :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
-                    type="button"
-                    class="uppercase"
+                <IdeaVote
+                    :idea="idea"
+                    :custom-classes="['uppercase', !completed ? 'bg-slate-200 text-transparent pointer-events-none' : '']"
                     width="w-32"
-                    :class="{ 'bg-slate-200 text-transparent pointer-events-none': !completed }"
-                >
-                    {{ idea.has_voted ? 'Voted' : 'Vote' }}
-                </component>
+                />
             </div>
         </div> <!-- end buttons-container  -->
 
@@ -99,13 +95,12 @@ import Comments from '@/Components/Comments/Comments.vue'
 import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 import Reply from '@/Components/Ideas/Reply.vue'
 import SetStatus from '@/Components/Ideas/SetStatus.vue'
-import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { useDateHelpers } from '@/Composables/useDateHelpers'
 import { Inertia } from '@inertiajs/inertia'
 import { ref } from 'vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
-import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
+import IdeaVote from '@/Components/Shares/IdeaVote.vue'
 
 const props = defineProps({
     idea: {

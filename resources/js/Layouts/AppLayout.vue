@@ -78,8 +78,22 @@
                 </AppForm>
 
                 <div class="my-6 text-center flex flex-col items-center" v-else>
-                    <AppPrimaryButton :as="Link" :href="route('login')" :flex="false" class="inline-block">Login</AppPrimaryButton>
-                    <AppSecondaryButton :as="Link" :href="route('register')" class="inline-block mt-4">Sign Up</AppSecondaryButton>
+                    <AppPrimaryButton
+                        :tag="Link"
+                        :href="route('login')"
+                        :flex="false"
+                        custom-classes="inline-block"
+                    >
+                        Login
+                    </AppPrimaryButton>
+
+                    <AppSecondaryButton
+                        :tag="Link"
+                        :href="route('register')"
+                        custom-classes="inline-block mt-4"
+                    >
+                        Sign Up
+                    </AppSecondaryButton>
                 </div>
             </div>
         </div>

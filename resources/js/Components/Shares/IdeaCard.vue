@@ -59,15 +59,13 @@
                             <div class="text-xxs font-semibold leading-none text-gray-400">Votes</div>
                         </div>
 
-                        <Component
-                            :is="idea.has_voted ? AppPrimaryButton : AppSecondaryButton"
-                            class="uppercase -mx-5"
+                        <!-- <IdeaVote
+                            :idea="idea"
+                            class="-mx-5 uppercase"
                             size="text-xxs"
                             width="w-20"
                             height="h-10"
-                        >
-                            {{ idea.has_voted ? 'Voted' : 'Vote' }}
-                        </Component>
+                        /> -->
                     </div>
                 </div>
             </div>
@@ -81,6 +79,7 @@ import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { Link } from '@inertiajs/inertia-vue3'
 import { computed, ref } from 'vue'
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
+import IdeaVote from './IdeaVote.vue'
 
 const props = defineProps({
     idea: {

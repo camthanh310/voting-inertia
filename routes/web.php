@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IdeaController;
+use App\Http\Controllers\VoteController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', [IdeaController::class, 'index'])->name('idea.index');
 
 Route::get('/ideas/{idea:slug}', [IdeaController::class, 'show'])->name('idea.show');
 Route::post('/ideas', [IdeaController::class, 'store'])->name('idea.store');
+
+Route::post('/ideas/{idea}/vote', [VoteController::class, 'store'])->name('vote.store');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
