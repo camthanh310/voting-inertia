@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import IdeaCard from '../Shares/IdeaCard.vue'
+import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 
 defineProps({
     idea: {
