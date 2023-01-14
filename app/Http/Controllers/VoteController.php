@@ -51,8 +51,6 @@ class VoteController extends Controller
         } else {
             $idea->vote(auth()->user());
         }
-
-
     }
 
     /**

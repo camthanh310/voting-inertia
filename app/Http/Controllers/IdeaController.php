@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use Inertia\Inertia;
-use App\Models\Status;
 use App\Http\Resources\IdeaResource;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
-use Illuminate\Database\Eloquent\Builder;
 
 class IdeaController extends Controller
 {
