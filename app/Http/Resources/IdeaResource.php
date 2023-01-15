@@ -15,27 +15,27 @@ class IdeaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'slug' => $this->slug,
-            'created_at' => $this->created_at,
+            'id'          => $this->id,
+            'slug'        => $this->slug,
+            'created_at'  => $this->created_at,
             'description' => $this->description,
-            'title' => $this->title,
-            'user' => [
-                'id' => $this->user_id,
-                'name' => $this->user->name,
+            'title'       => $this->title,
+            'user'        => [
+                'id'         => $this->user_id,
+                'name'       => $this->user->name,
                 'avatar_url' => $this->user->getAvatar(),
             ],
             'category' => [
-                'id' => $this->category_id,
+                'id'   => $this->category_id,
                 'name' => $this->category->name
             ],
             'status' => [
-                'id' => $this->status_id,
-                'name' => $this->status->name,
+                'id'      => $this->status_id,
+                'name'    => $this->status->name,
                 'classes' => $this->status->classes
             ],
             'votes_count' => $this->votes_count,
-            'has_voted' => (bool) ($this->vote_by_user ? $this->vote_by_user : $this->isVotedByUser(auth()->user()))
+            'has_voted' => $request->has('vote_by_user') ? $this->vote_by_user : $this->isVotedByUser(auth()->user())
         ];
     }
 }

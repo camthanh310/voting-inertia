@@ -96,7 +96,7 @@ import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 import Reply from '@/Components/Ideas/Reply.vue'
 import SetStatus from '@/Components/Ideas/SetStatus.vue'
 import { useDateHelpers } from '@/Composables/useDateHelpers'
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
@@ -112,7 +112,7 @@ const props = defineProps({
 const { diffForHumans } = useDateHelpers()
 
 const completed = ref(false)
-Inertia.visit(
+router.visit(
     route('idea.show', { idea: props.idea }),
     {
         method: 'GET',

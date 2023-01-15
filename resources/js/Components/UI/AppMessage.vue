@@ -1,8 +1,8 @@
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3'
+import { usePage } from '@inertiajs/vue3'
 import { computed, ref, watch } from 'vue'
 
-const successMessage = computed(() => usePage().props.value.flash.success)
+const successMessage = computed(() => usePage().props.flash.success)
 const isVisible = ref(true)
 
 watch(

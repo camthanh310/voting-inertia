@@ -76,7 +76,7 @@
 <script setup>
 import IdeaAction from '@/Components/Shares/IdeaAction.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
-import { Link } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import IdeaVote from './IdeaVote.vue'

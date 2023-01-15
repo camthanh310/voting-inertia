@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Resources\IdeaResource;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
+use Illuminate\Http\Request;
 
 class IdeaController extends Controller
 {
@@ -15,21 +16,23 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $idea = Idea::query()
-                    ->with([
-                        'user',
-                        'category',
-                        'status'
-                    ])
-                    ->withVotedByUser()
-                    ->withCount(['votes'])
-                    ->orderByDesc('id')
-                    ->simplePaginate(Idea::PAGINATION_COUNT);
+        $ideas = IdeaResource::collection(
+            Idea::query()
+                ->with([
+                    'user',
+                    'category',
+                    'status'
+                ])
+                ->withVotedByUser()
+                ->withCount(['votes'])
+                ->orderByDesc('id')
+                ->simplePaginate(Idea::PAGINATION_COUNT)
+            );
 
         return Inertia::render('Idea/Index', [
-            'ideas' => IdeaResource::collection($idea)
+            'ideas' => $ideas
         ]);
     }
 
@@ -67,7 +70,11 @@ class IdeaController extends Controller
         return Inertia::render('Idea/Show', [
             'idea' => IdeaResource::make(
                 $idea
-                    ->load(['user', 'category', 'status'])
+                    ->load([
+                        'user',
+                        'category',
+                        'status'
+                    ])
                     ->loadCount(['votes'])
             )
         ]);

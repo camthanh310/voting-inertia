@@ -1,7 +1,7 @@
 <script setup>
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
-import { Link } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 const props = defineProps({

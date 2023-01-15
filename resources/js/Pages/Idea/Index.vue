@@ -112,7 +112,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { computed, onMounted, ref } from 'vue'
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 import IdeaVote from '@/Components/Shares/IdeaVote.vue'
@@ -141,10 +141,13 @@ const completed = ref(false)
 const url = ref(route('idea.index'))
 
 function loadIdea() {
-    Inertia.visit(
+    router.visit(
         url.value,
         {
             method: 'get',
+            data: {
+                vote_by_user: true
+            },
             preserveState: true,
             onBefore: visit => {
                 completed.value = visit.completed

@@ -140,21 +140,20 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 import { computed } from 'vue'
-import { useForm, usePage } from '@inertiajs/inertia-vue3'
+import { useForm, usePage, Head, Link } from '@inertiajs/vue3'
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
 import AppTextarea from '@/Components/UI/AppTextarea.vue'
 import AppInput from '@/Components/UI/AppInput.vue'
 import AppForm from '@/Components/UI/AppForm.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
 import AppMessage from '@/Components/UI/AppMessage.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 import AppInfiniteLoadingIcon from '@/Components/UI/AppInfiniteLoadingIcon.vue'
 
-const canLogin = computed(() => usePage().props.value.canLogin)
-const canRegister = computed(() => usePage().props.value.canRegister)
-const authUser = computed(() => usePage().props.value.auth.user)
+const canLogin = computed(() => usePage().props.canLogin)
+const canRegister = computed(() => usePage().props.canRegister)
+const authUser = computed(() => usePage().props.auth.user)
 const ideaFormMessage = computed(() => authUser.value ? 'Let us know what you would like and we\'ll take a look over!' : 'Please login to create an idea.')
 
 const ideaForm = useForm({
