@@ -24,7 +24,7 @@ class StoreVoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'has_voted' => ['required', 'boolean']
+            'has_voted' => ['sometimes', 'boolean']
         ];
     }
 }
