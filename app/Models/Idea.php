@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class Idea extends Model
 {
@@ -86,5 +89,25 @@ class Idea extends Model
     public function removeVote(User $user): void
     {
         $this->votes()->detach($user->id);
+    }
+
+    public static function filter(array $data): QueryBuilder
+    {
+        $request = new Request($data);
+
+        $filters = collect([
+            AllowedFilter::callback(
+                'status_id',
+                function (Builder $builder, $value) {
+                    $builder->when(
+                        !blank($value),
+                        fn (Builder $builder) => $builder->where('status_id', $value)
+                    );
+                }
+            )
+        ]);
+
+        return QueryBuilder::for(self::class, $request)
+                    ->allowedFilters($filters->toArray());
     }
 }

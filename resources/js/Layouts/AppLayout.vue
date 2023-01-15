@@ -99,36 +99,7 @@
         </div>
 
         <div class="w-full px-2 md:px-0 md:w-175">
-            <nav class="hidden md:flex items-center justify-between text-xs">
-                <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
-                    <li>
-                        <a href="#" class="border-b-4 pb-3 border-blue">All Ideas (87)</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">
-                            Considering (8)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">
-                            In Progress (1)
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
-                    <li>
-                        <a href="#" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">
-                            Implemented (10)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">
-                            Closed (8)
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <StatusFilters />
 
             <div class="mt-8">
                 <slot />
@@ -150,6 +121,7 @@ import AppForm from '@/Components/UI/AppForm.vue'
 import AppMessage from '@/Components/UI/AppMessage.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 import AppInfiniteLoadingIcon from '@/Components/UI/AppInfiniteLoadingIcon.vue'
+import StatusFilters from '@/Layouts/StatusFilters.vue'
 
 const canLogin = computed(() => usePage().props.canLogin)
 const canRegister = computed(() => usePage().props.canRegister)

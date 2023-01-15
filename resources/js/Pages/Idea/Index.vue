@@ -145,9 +145,6 @@ function loadIdea() {
         url.value,
         {
             method: 'get',
-            data: {
-                vote_by_user: true
-            },
             preserveState: true,
             onBefore: visit => {
                 completed.value = visit.completed

@@ -18,8 +18,14 @@ class IdeaController extends Controller
      */
     public function index(Request $request)
     {
+        $request->merge([
+            'vote_by_user' => true
+        ]);
+
+        $filters = ['filter' => $request->get('filter')];
+
         $ideas = IdeaResource::collection(
-            Idea::query()
+            Idea::filter($filters)
                 ->with([
                     'user',
                     'category',
