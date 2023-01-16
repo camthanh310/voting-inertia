@@ -16,5 +16,6 @@
     </head>
     <body class="font-sans bg-gray-background text-gray-900 text-sm">
         @inertia
+        <div id="popover"></div>
     </body>
 </html>

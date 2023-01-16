@@ -1,16 +1,13 @@
 <template>
     <Popover class="relative">
-        <PopoverButton
-            as="div"
-            esc
-        >
-            <AppSecondaryButton width="w-36" size="text-sm" flex>
-                <span>Set Status</span>
-                <ChevronDownIcon class="w-4 h-4 ml-2" />
-            </AppSecondaryButton>
-        </PopoverButton>
+        <HighOrderFloat>
+            <PopoverButton as="div" esc>
+                <AppSecondaryButton width="w-36" size="text-sm" flex>
+                    <span>Set Status</span>
+                    <ChevronDownIcon class="w-4 h-4 ml-2" />
+                </AppSecondaryButton>
+            </PopoverButton>
 
-        <AppPopperTransition>
             <PopoverPanel class="absolute z-20 w-64 md:w-76 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
                 <AppForm>
                     <div class="space-y-2">
@@ -44,7 +41,7 @@
                     </div>
                 </AppForm>
             </PopoverPanel>
-        </AppPopperTransition>
+        </HighOrderFloat>
     </Popover>
 </template>
 
@@ -52,13 +49,13 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import { ChevronDownIcon } from '@heroicons/vue/24/solid'
-import AppPopperTransition from '@/Components/UI/AppPopperTransition.vue'
+import HighOrderFloat from '@/Components/UI/HighOrderFloat.vue'
 import AppForm from '@/Components/UI/AppForm.vue'
 import AppTextarea from '@/Components/UI/AppTextarea.vue'
 import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
 import AppCheckbox from '@/Components/UI/AppCheckbox.vue'
-import AppRadio from '../UI/AppRadio.vue'
+import AppRadio from '@/Components/UI/AppRadio.vue'
 
 const options = [
     { text: 'Open', color: 'text-gray-600', value: 1 },

@@ -1,19 +1,26 @@
 <template>
     <Popover class="relative">
-        <PopoverButton
-            esc
-            as="div"
-        >
-            <AppPrimaryButton width="w-32" size="text-sm">Reply</AppPrimaryButton>
-        </PopoverButton>
+        <HighOrderFloat>
+        <!-- portal="#popover"
+        enter="transition duration-100 ease-out"
+        enter-from="transform scale-95 opacity-0"
+        enter-to="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leave-from="transform scale-100 opacity-100"
+        leave-to="transform scale-95 opacity-0"
+        tailwindcss-origin-class -->
+            <PopoverButton
+                esc
+                as="div"
+            >
+                <AppPrimaryButton width="w-32" size="text-sm">Reply</AppPrimaryButton>
+            </PopoverButton>
 
-        <AppPopperTransition>
             <PopoverPanel class="absolute z-10 w-64 md:w-104 text-left font-semibold text-sm bg-white shadow-dialog rounded-xl mt-2">
                 <AppForm>
                     <div>
                         <AppTextarea id="post-comment" placeholder="Go ahead, don't be shy. Share your thoughts ..."  />
                     </div>
-
                     <div class="flex flex-col md:flex-row items-center md:space-x-3">
                         <AppPrimaryButton type="submit" size="text-sm" width="w-full md:w-1/2">
                             Post Comment
@@ -29,8 +36,7 @@
                     </div>
                 </AppForm>
             </PopoverPanel>
-
-        </AppPopperTransition>
+        </HighOrderFloat>
     </Popover>
 </template>
 
@@ -40,6 +46,6 @@ import AppPrimaryButton from '@/Components/UI/AppPrimaryButton.vue'
 import AppForm from '@/Components/UI/AppForm.vue'
 import AppSecondaryButton from '@/Components/UI/AppSecondaryButton.vue'
 import AppTextarea from '@/Components/UI/AppTextarea.vue'
-import AppPopperTransition from '@/Components/UI/AppPopperTransition.vue'
+import HighOrderFloat from '@/Components/UI/HighOrderFloat.vue'
 import AppPaperClipIcon from '@/Components/UI/AppPaperClipIcon.vue'
 </script>
