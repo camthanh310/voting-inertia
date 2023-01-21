@@ -1,23 +1,41 @@
 <script setup>
-import { ref } from 'vue'
-import { Link } from '@inertiajs/vue3'
+import { computed, ref, watchEffect } from 'vue'
+import { Link, usePage } from '@inertiajs/vue3'
 
 const statusFilter = ref('')
 
 const leftStatuses = [
-    { id: '', key: '', name: 'All Ideas', count: 87 },
-    { id: 2, key: 'Considering', name: 'Considering', count: 8 },
-    { id: 3, key: 'InProgressll', name: 'In Progress', count: 1 },
+    { id: '', name: 'All Ideas', count: 87 },
+    { id: 2, name: 'Considering', count: 8 },
+    { id: 3, name: 'In Progress', count: 1 },
 ]
 
 const rightStatuses = [
-    { id: 4, key: 'Implemented', name: 'Implemented', count: 1 },
-    { id: 5, key: 'Closed', name: 'Closed', count: 8 }
+    { id: 4, name: 'Implemented', count: 1 },
+    { id: 5, name: 'Closed', count: 8 }
 ]
 
 function setStatus(statusKey) {
+    console.log('goodjob');
     statusFilter.value = statusKey
 }
+
+const pageComponent = computed(() => usePage().component)
+
+watchEffect(
+    () => {
+        if (pageComponent.value === 'Idea/Show') {
+            statusFilter.value = 'Show'
+        } else if (pageComponent.value === 'Idea/Index') {
+            const status = usePage().props.filter.status_id
+            if (['', null].includes(status)) {
+                statusFilter.value = ''
+            } else {
+                statusFilter.value = status
+            }
+        }
+    }
+)
 </script>
 
 <template>
@@ -25,15 +43,15 @@ function setStatus(statusKey) {
         <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
             <li
                 v-for="status in leftStatuses"
-                :key="status.key"
+                :key="status.id"
             >
                 <Link
                     :href="route('idea.index')"
                     class="border-b-4 pb-3"
-                    :class="[status.key === statusFilter ? 'border-blue text-gray-900' : 'transition duration-150  hover:border-blue']"
+                    :class="[status.id === +statusFilter ? 'border-blue text-gray-900' : 'transition duration-150  hover:border-blue']"
                     :data="{ filter: { status_id: status.id } }"
                     preserve-state
-                    @click="setStatus(status.key)"
+                    @click="setStatus(status.id)"
                 >
                     {{ status.name }} ({{ status.count }})
                 </Link>
@@ -44,15 +62,15 @@ function setStatus(statusKey) {
         <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
             <li
                 v-for="status in rightStatuses"
-                :key="status.key"
+                :key="status.id"
             >
                 <Link
                     :href="route('idea.index')"
                     class="border-b-4 pb-3"
-                    :class="[status.key === statusFilter ? 'border-blue text-gray-900' : 'transition duration-150  hover:border-blue']"
+                    :class="[status.id === +statusFilter ? 'border-blue text-gray-900' : 'transition duration-150  hover:border-blue']"
                     :data="{ filter: { status_id: status.id } }"
                     preserve-state
-                    @click="setStatus(status.key)"
+                    @click="setStatus(status.id)"
                 >
                     {{ status.name }} ({{ status.count }})
                 </Link>

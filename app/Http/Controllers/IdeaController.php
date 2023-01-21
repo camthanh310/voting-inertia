@@ -35,10 +35,14 @@ class IdeaController extends Controller
                 ->withCount(['votes'])
                 ->orderByDesc('id')
                 ->simplePaginate(Idea::PAGINATION_COUNT)
+                ->withQueryString()
             );
 
         return Inertia::render('Idea/Index', [
-            'ideas' => $ideas
+            'ideas' => $ideas,
+            'filter' => [
+                'status_id' => data_get($filters, 'filter.status_id', '')
+            ]
         ]);
     }
 
