@@ -142,7 +142,7 @@ const url = ref(route('idea.index'))
 
 function loadIdea() {
     router.visit(
-        url.value,
+        decodeURI(url.value),
         {
             method: 'get',
             preserveState: true,

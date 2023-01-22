@@ -1,22 +1,22 @@
 <script setup>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watchEffect, reactive } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
 
 const statusFilter = ref('')
 
-const leftStatuses = [
-    { id: '', name: 'All Ideas', count: 87 },
-    { id: 2, name: 'Considering', count: 8 },
-    { id: 3, name: 'In Progress', count: 1 },
-]
+const leftStatuses = reactive([
+    { id: '', key: 'all_statuses', name: 'All Ideas', count: 0 },
+    { id: 2, key: 'CONSIDERING', name: 'Considering', count: 0 },
+    { id: 3, key: 'IN_PROGRESS', name: 'In Progress', count: 0 },
+])
 
-const rightStatuses = [
-    { id: 4, name: 'Implemented', count: 1 },
-    { id: 5, name: 'Closed', count: 8 }
-]
+const rightStatuses = reactive([
+    { id: 4, key: 'IMPLEMENTED', name: 'Implemented', count: 0 },
+    { id: 5, key: 'CLOSED', name: 'Closed', count: 0 }
+])
 
 function setStatus(statusKey) {
-    console.log('goodjob');
+    // console.log('goodjob');
     statusFilter.value = statusKey
 }
 
@@ -36,6 +36,23 @@ watchEffect(
         }
     }
 )
+
+const ideaStatusCount = computed(() => usePage().props.idea.status_count)
+
+function setStatusCount(statuses) {
+    statuses.forEach((status, index) => {
+        const statusKey = status['key']
+
+        if (typeof ideaStatusCount.value[statusKey] !== 'undefined') {
+            statuses[index]['count'] = ideaStatusCount.value[statusKey]
+        }
+    })
+}
+
+onMounted(() => {
+    setStatusCount(leftStatuses)
+    setStatusCount(rightStatuses)
+})
 </script>
 
 <template>

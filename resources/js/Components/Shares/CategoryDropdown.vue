@@ -1,6 +1,7 @@
 <script setup>
 import AppSelect from '@/Components/UI/AppSelect.vue'
-import { onMounted, ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+import { computed } from 'vue'
 
 defineProps({
     classes: {
@@ -9,20 +10,7 @@ defineProps({
     }
 })
 
-const categories = ref([])
-
-async function fetchCategories() {
-    try {
-        const response = await axios.get(route('categories.index'))
-        categories.value = response.data
-    } catch (error) {
-        console.log('TODO error');
-    }
-}
-
-onMounted(() => {
-    fetchCategories()
-})
+const categories = computed(() => usePage().props.categories)
 </script>
 
 <template>

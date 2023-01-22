@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Status;
+use Inertia\Middleware;
+use App\Models\Category;
+use Tightenco\Ziggy\Ziggy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
+use App\Http\Resources\CategoryResource;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -46,6 +49,10 @@ class HandleInertiaRequests extends Middleware
                     'success' => $request->session()->get('success')
                 ];
             },
+            'categories' => CategoryResource::collection(Category::all()),
+            'idea' => [
+                'status_count' => Status::getCount()
+            ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
