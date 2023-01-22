@@ -8,6 +8,7 @@ use App\Http\Resources\IdeaResource;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class IdeaController extends Controller
 {

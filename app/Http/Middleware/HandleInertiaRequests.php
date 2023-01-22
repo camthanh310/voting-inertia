@@ -50,9 +50,7 @@ class HandleInertiaRequests extends Middleware
                 ];
             },
             'categories' => CategoryResource::collection(Category::all()),
-            'idea' => [
-                'status_count' => Status::getCount()
-            ],
+            'status_count' => Status::getCount(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
