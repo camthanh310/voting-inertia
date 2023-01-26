@@ -4,6 +4,12 @@ import { usePage } from '@inertiajs/vue3'
 import StatusFilter from '@/Layouts/StatusFilter.vue'
 import StatusNav from '@/Layouts/StatusNav.vue'
 
+const emit = defineEmits(['on-update-query-string'])
+
+function onUpdateQueryString(query) {
+    emit('on-update-query-string', query)
+}
+
 const leftStatuses = reactive([
     { id: '', key: 'all_statuses', name: 'All Ideas', count: 0 },
     { id: 2, key: 'CONSIDERING', name: 'Considering', count: 0 },
@@ -40,6 +46,7 @@ onMounted(() => {
                 v-for="status in leftStatuses"
                 :key="status.id"
                 :status="status"
+                @on-update-query-string="onUpdateQueryString"
             />
         </StatusNav>
 
@@ -48,6 +55,7 @@ onMounted(() => {
                 v-for="status in rightStatuses"
                 :key="status.id"
                 :status="status"
+                @on-update-query-string="onUpdateQueryString"
             />
         </StatusNav>
     </nav>

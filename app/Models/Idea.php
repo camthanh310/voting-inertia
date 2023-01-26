@@ -104,6 +104,15 @@ class Idea extends Model
                         fn (Builder $builder) => $builder->where('status_id', $value)
                     );
                 }
+            ),
+            AllowedFilter::callback(
+                'category_id',
+                function (Builder $builder, $value) {
+                    $builder->when(
+                        !blank($value),
+                        fn (Builder $builder) => $builder->where('category_id', $value)
+                    );
+                }
             )
         ]);
 

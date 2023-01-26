@@ -99,7 +99,7 @@
         </div>
 
         <div class="w-full px-2 md:px-0 md:w-175">
-            <StatusFilters />
+            <StatusFilters :query-string="queryString" @on-update-query-string="onUpdateQueryString" />
 
             <div class="mt-8">
                 <slot />
@@ -140,6 +140,12 @@ const props = defineProps({
         default: ''
     }
 })
+
+const emit = defineEmits(['on-update-query-string'])
+
+function onUpdateQueryString(query) {
+    emit('on-update-query-string', query)
+}
 
 function onSubmit() {
     ideaForm.post(

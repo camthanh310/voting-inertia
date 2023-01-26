@@ -7,6 +7,7 @@
         }"
         :value="modelValue"
     >
+        <slot />
         <option
             v-for="option in options"
             :value="option.value || option"

@@ -1,8 +1,13 @@
 <template>
-    <AppLayout title="Home">
+    <AppLayout
+        title="Home"
+        @on-update-query-string="onUpdateQueryString"
+    >
         <div class="fliters flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
             <div class="w-full md:w-1/3">
-                <CategoryDropdown />
+                <CategoryDropdown v-model="category">
+                    <option value="">All Categories</option>
+                </CategoryDropdown>
             </div>
 
             <div class="w-1/3">
@@ -111,8 +116,8 @@ import { useDateHelpers } from '@/Composables/useDateHelpers'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import { computed, onMounted, ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { computed, onMounted, ref, watch, reactive } from 'vue'
+import { router } from '@inertiajs/vue3'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 import IdeaVote from '@/Components/Shares/IdeaVote.vue'
@@ -140,12 +145,13 @@ const filters = [
 const completed = ref(false)
 const url = ref(route('idea.index'))
 
-function loadIdea() {
+function loadIdea(data) {
     router.visit(
         decodeURI(url.value),
         {
             method: 'get',
             preserveState: true,
+            data: data || {},
             onBefore: visit => {
                 completed.value = visit.completed
             },
@@ -177,6 +183,28 @@ function linkToIdea(event, index) {
         ideaLinksRef.value[index].ideaLinkRef.$el.click()
     }
 }
+
+const category = ref('')
+const queryString = reactive({
+    filter: {
+        status_id: '',
+        category_id: ''
+    }
+})
+
+function onUpdateQueryString(query) {
+    const [key, value] = Object.entries(query)[0]
+    queryString.filter[key] = value
+    loadIdea(queryString)
+}
+
+watch(
+    () => category.value,
+    (categoryId) => {
+        queryString.filter.category_id = categoryId
+        loadIdea(queryString)
+    }
+)
 
 onMounted(() => {
     loadIdea()

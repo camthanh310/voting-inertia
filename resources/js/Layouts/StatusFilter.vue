@@ -9,10 +9,13 @@ defineProps({
     }
 })
 
+const emit = defineEmits(['on-update-query-string'])
+
 const statusFilter = ref('')
 
 function setStatus(statusKey) {
     statusFilter.value = statusKey
+    emit('on-update-query-string', { status_id: statusFilter.value} )
 }
 
 const pageComponent = computed(() => usePage().component)
@@ -37,11 +40,8 @@ watchEffect(
 <template>
     <li>
         <Link
-            :href="route('idea.index')"
             class="border-b-4 pb-3"
             :class="[status.id === statusFilter ? 'border-blue text-gray-900' : 'transition duration-150  hover:border-blue']"
-            :data="{ filter: { status_id: status.id } }"
-            preserve-state
             @click="setStatus(status.id)"
         >
             {{ status.name }} ({{ status.count }})

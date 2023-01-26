@@ -18,5 +18,7 @@ const categories = computed(() => usePage().props.categories)
         id="category-add"
         :options="categories"
         :class="classes"
-    />
+    >
+        <slot />
+    </AppSelect>
 </template>
