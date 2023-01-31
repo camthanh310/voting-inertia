@@ -11,7 +11,11 @@
             </div>
 
             <div class="w-1/3">
-                <AppSelect id="other-filters" :options="filters" />
+                <AppSelect id="other-filters" v-model="otherFilter">
+                    <option value="">No Filter</option>
+                    <option value="top_voted">Top Voted</option>
+                    <option value="my_ideas">My Ideas</option>
+                </AppSelect>
             </div>
 
             <div class="w-full md:w-2/3 relative">
@@ -117,7 +121,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { computed, onMounted, ref, watch, reactive } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import CategoryDropdown from '@/Components/Shares/CategoryDropdown.vue'
 import IdeaVote from '@/Components/Shares/IdeaVote.vue'
@@ -135,19 +139,14 @@ const prevPageUrl = computed(() => props.ideas.links.prev)
 
 const { diffForHumans } = useDateHelpers()
 
-const filters = [
-    'Filter One',
-    'Category One',
-    'Category One',
-    'Category One',
-]
-
+const defaultUrl = computed(() => usePage().url || route('idea.index'))
 const completed = ref(false)
-const url = ref(route('idea.index'))
+const url = ref(defaultUrl.value)
 
 function loadIdea(data) {
+    const decodeUri = decodeURI(url.value)
     router.visit(
-        decodeURI(url.value),
+        decodeUri,
         {
             method: 'get',
             preserveState: true,
@@ -188,15 +187,34 @@ const category = ref('')
 const queryString = reactive({
     filter: {
         status_id: '',
-        category_id: ''
-    }
+        category_id: '',
+        my_ideas: ''
+    },
+    sort: ''
 })
+
+const otherFilter = ref('')
 
 function onUpdateQueryString(query) {
     const [key, value] = Object.entries(query)[0]
     queryString.filter[key] = value
     loadIdea(queryString)
 }
+
+watch(
+    () => otherFilter.value,
+    (otherFilter) => {
+        if (otherFilter === 'top_voted') {
+            queryString.sort = otherFilter
+            queryString.filter.my_ideas = ''
+        } else if (otherFilter === 'my_ideas') {
+            queryString.filter.my_ideas = otherFilter
+            queryString.sort = ''
+        }
+
+        loadIdea(queryString)
+    }
+)
 
 watch(
     () => category.value,

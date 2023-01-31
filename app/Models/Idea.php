@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class Idea extends Model
@@ -113,10 +114,28 @@ class Idea extends Model
                         fn (Builder $builder) => $builder->where('category_id', $value)
                     );
                 }
+            ),
+            AllowedFilter::callback(
+                'my_ideas',
+                function (Builder $builder, $value) {
+                    $builder->when(
+                        $value === 'my_ideas',
+                        fn (Builder $builder) => $builder->where('user_id', auth()->id())
+                    );
+                }
             )
         ]);
 
+        $sorts = collect([
+            AllowedSort::callback(
+                'top_voted',
+                function (Builder $builder, $value) {
+                    $builder->orderByDesc('votes_count');
+            })
+        ]);
+
         return QueryBuilder::for(self::class, $request)
-                    ->allowedFilters($filters->toArray());
+                    ->allowedFilters($filters->toArray())
+                    ->allowedSorts($sorts->toArray());
     }
 }

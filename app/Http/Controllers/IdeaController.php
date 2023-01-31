@@ -23,7 +23,7 @@ class IdeaController extends Controller
             'vote_by_user' => true
         ]);
 
-        $filters = ['filter' => $request->get('filter')];
+        $filters = ['filter' => $request->get('filter'), 'sort' => $request->get('sort', '')];
 
         $ideas = IdeaResource::collection(
             Idea::filter($filters)
