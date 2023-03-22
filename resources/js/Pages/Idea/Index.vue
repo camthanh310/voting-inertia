@@ -144,6 +144,8 @@ const completed = ref(false)
 const url = ref(defaultUrl.value)
 
 function loadIdea(data) {
+    console.log('wokring');
+    console.log(defaultUrl.value)
     const decodeUri = decodeURI(url.value)
     router.visit(
         decodeUri,
@@ -204,6 +206,7 @@ function onUpdateQueryString(query) {
 watch(
     () => otherFilter.value,
     (otherFilter) => {
+        console.log('good job');
         if (otherFilter === 'top_voted') {
             queryString.sort = otherFilter
             queryString.filter.my_ideas = ''
