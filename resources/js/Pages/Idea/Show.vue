@@ -1,12 +1,12 @@
 <template>
     <AppLayout :title="idea.title">
         <div>
-            <a href="#" class="flex items-center font-semibold hover:underline">
+            <Link :href="$route('idea.index')" class="flex items-center font-semibold hover:underline">
                 <ChevronLeftIcon class="w-4 h-4" />
                 <span class="ml-2">
                     All Ideas
                 </span>
-            </a>
+            </Link>
         </div>
 
 
@@ -96,11 +96,12 @@ import IdeaCard from '@/Components/Shares/IdeaCard.vue'
 import Reply from '@/Components/Ideas/Reply.vue'
 import SetStatus from '@/Components/Ideas/SetStatus.vue'
 import { useDateHelpers } from '@/Composables/useDateHelpers'
-import { router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import IdeaLoading from '@/Components/Shares/IdeaLoading.vue'
 import IdeaStatus from '@/Components/Shares/IdeaStatus.vue'
 import IdeaVote from '@/Components/Shares/IdeaVote.vue'
+import { ChevronLeftIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
     idea: {

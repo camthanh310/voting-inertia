@@ -99,7 +99,7 @@
         </div>
 
         <div class="w-full px-2 md:px-0 md:w-175">
-            <StatusFilters :query-string="queryString" @on-update-query-string="onUpdateQueryString" />
+            <StatusFilters />
 
             <div class="mt-8">
                 <slot />
@@ -134,18 +134,12 @@ const ideaForm = useForm({
     'description': ''
 })
 
-const props = defineProps({
+defineProps({
     title: {
         type: String,
         default: ''
     }
 })
-
-const emit = defineEmits(['on-update-query-string'])
-
-function onUpdateQueryString(query) {
-    emit('on-update-query-string', query)
-}
 
 function onSubmit() {
     ideaForm.post(

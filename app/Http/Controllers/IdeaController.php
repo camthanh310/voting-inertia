@@ -41,9 +41,13 @@ class IdeaController extends Controller
 
         return Inertia::render('Idea/Index', [
             'ideas' => $ideas,
-            'filter' => [
-                'status_id' => data_get($filters, 'filter.status_id', ''),
-                'category_id' => data_get($filters, 'filter.category_id', '')
+            'query' => [
+                'filter' => [
+                    'status_id'   => data_get($filters, 'filter.status_id', ''),
+                    'category_id' => data_get($filters, 'filter.category_id', ''),
+                    'my_ideas'    => data_get($filters, 'filter.my_ideas', ''),
+                ],
+                'sort' => data_get($filters, 'sort', '')
             ]
         ]);
     }

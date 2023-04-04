@@ -25,7 +25,7 @@ import { useSetupForm } from '@/Composables/useSetupForm';
 const props = defineProps({
     options: {
         type: Array,
-        required: true
+        default: () => ([])
     },
     modelValue: {
         type: [String, Number]
